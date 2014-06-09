@@ -17,13 +17,11 @@ app.get('/', function (page, model){
 
 app.get('/voting', function (page, model, params){
 
-  /*  var user = model.at('auths.' + model.get('_session.userId'));
-   // var query = model.query('voting', {owner: model.get('_session.userId')});
-   model.subscribe(query, function(){
-        model.add('voting',{name: 'Выбор тачки', date: new Date()})*/
+
+   model.subscribe('todos', function(){
 
     page.render('voting');
-  //  })
+   })
 
 });
 app.get('/voting/new', function (page, model){

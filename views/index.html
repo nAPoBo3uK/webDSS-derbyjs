@@ -5,6 +5,22 @@
 <Title:>
     webDSS
 <Head:>
+    <ul id="todo-list">
+        {{each _page.todos as #todo, #index}}
+        <li class="{{if #todo.completed}}completed{{/}}">
+
+            <div class="view">
+                <input class="toggle" type="checkbox" checked="{{#todo.completed}}">
+                <label>{{#todo.text}}</label>
+                <button class="destroy"> </button>
+            </div>
+            <form>
+                <input class="edit">
+            </form>
+
+        </li>
+        {{/each}}
+    </ul>
     {{if _session.flash.error}}
     <div class="container">
 
@@ -26,13 +42,14 @@
                     <view name="nav-link" href="/voting">Голосования</view>
                     <view name="nav-link" href="/users">Пользователи</view>
                 </ul>
-                <form class="navbar-form navbar-left" role="search">
+                <form class="navbar-form navbar-right" role="search">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Найти">
                     </div>
                 </form>
 
                 <h4 class="text-right">{{_page.user.local.username}}
+
                 <a class="btn btn-danger" href="/logout">Выйти</a></h4>
             </div>
     </div>

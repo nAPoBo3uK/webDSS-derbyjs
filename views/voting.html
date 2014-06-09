@@ -1,6 +1,8 @@
 <index:>
     <div class="container-fluid">
+
         <div class="col-xs-3">
+
             <table class="table table-hover">
                 <thead>
                 <tr>
@@ -9,15 +11,18 @@
                     <th>Роль</th>
                 </tr>
                 </thead>
-                <tbody>
-                {{each _page.votingList as #voting}}
-                <tr>
-                    <td>{{voting.name}}</td>
-                    <td>{{voting.date}}</td>
-                    <td>{{voting.role}}</td>
-                </tr>
-                {{/each}}
-                </tbody>
+                {{if voting}}
+
+                    <tbody>
+                    {{each voting}}
+                        <tr>
+                            <td>{{this.name}}</td>
+                            <td>{{this.description}}</td>
+                            <td></td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                {{/}}
             </table>
         </div>
 
@@ -26,7 +31,7 @@
     </div>
     <new:>
         <div class="col-xs-6">
-            <form role="form" action='/register' method='post'>
+            <form role="form" on-submit="addVoting(_page.voting)">
                 <h3>Новое голосование</h3>
                 <div class="form-group">
                     <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.voting.name}}" required autofocus>
@@ -35,9 +40,9 @@
                     <textarea class="form-control" placeholder="Описание"  rows="3" value="{{_page.voting.description}}"></textarea>
                 </div>
                 <h4>Кандидаты</h4>
-                <form on-submit="updateCandidats(_page)">
+
                     <input type="text" placeholder="Имя кандидата">
-                </form>
+
                 <div class="form-group">
                     <button class="btn btn-primary btn-lg" type="submit">Создать</button>
                     <a class="btn btn-lg btn-default" href="/voting">Отмена</a>
