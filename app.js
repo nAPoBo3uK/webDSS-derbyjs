@@ -3,7 +3,6 @@
  */
 var options = {
     static: __dirname + '/views/public'
-
 };
 
 var derby = require('derby');

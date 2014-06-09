@@ -1,0 +1,43 @@
+{
+  "name": "webDSS",
+  "version": "0.1.0",
+  "description": "webDSS-derbyjs ==============",
+  "main": "server.js",
+  "dependencies": {
+    "derby": "0.6.0-alpha7",
+    "express": "~4.1.1",
+    "cookie-parser": "~1.0.1",
+    "express-session": "~1.0.4",
+    "serve-static": "~1.1.0",
+    "racer-browserchannel": "~0.1.1",
+    "livedb-mongo": "~0.3.2",
+    "racer-bundle": "~0.1.1",
+    "compression": "~1.0.2",
+    "derby-auth": "git://github.com/cray0000/derby-auth#0.5",
+    "connect-mongo": "~0.4.1",
+    "passport-github": "~0.1.5",
+    "body-parser": "~1.0.2",
+    "method-override": "~1.0.0",
+    "d-bootstrap": "~0.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nAPoBo3uK/webDSS-derbyjs"
+  },
+  "keywords": [
+    "DSS",
+    "voting",
+    "derby"
+  ],
+  "author": "Bolehivsky",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nAPoBo3uK/webDSS-derbyjs/issues"
+  },
+  "homepage": "https://github.com/nAPoBo3uK/webDSS-derbyjs"
+}

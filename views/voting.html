@@ -1,0 +1,54 @@
+<index:>
+    <div class="container-fluid">
+        <div class="col-xs-3">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Создан</th>
+                    <th>Роль</th>
+                </tr>
+                </thead>
+                <tbody>
+                {{each _page.votingList as #voting}}
+                <tr>
+                    <td>{{voting.name}}</td>
+                    <td>{{voting.date}}</td>
+                    <td>{{voting.role}}</td>
+                </tr>
+                {{/each}}
+                </tbody>
+            </table>
+        </div>
+
+    <a class="btn btn-lg btn-success" href="/voting/new">Новое</a>
+    <view name="{{if _page.voting}}voting{{else}}new{{/}}"></view>
+    </div>
+    <new:>
+        <div class="col-xs-6">
+            <form role="form" action='/register' method='post'>
+                <h3>Новое голосование</h3>
+                <div class="form-group">
+                    <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.voting.name}}" required autofocus>
+                </div>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Описание"  rows="3" value="{{_page.voting.description}}"></textarea>
+                </div>
+                <h4>Кандидаты</h4>
+                <form on-submit="updateCandidats(_page)">
+                    <input type="text" placeholder="Имя кандидата">
+                </form>
+                <div class="form-group">
+                    <button class="btn btn-primary btn-lg" type="submit">Создать</button>
+                    <a class="btn btn-lg btn-default" href="/voting">Отмена</a>
+                </div>
+            </form>
+
+        </div>
+        <div class="col-xs-3">
+            <h4>Участники</h4>
+        </div>
+   <voting:>
+        <div class="container">
+            <h1>{{_page.voting}}</h1>
+        </div>

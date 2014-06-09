@@ -16,6 +16,7 @@ exports.setup = function (app, options) {
     var store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})});
 
     var expressApp = express();
+
     // Respond to requests for application script bundles
     expressApp.use(app.scripts(store));
 

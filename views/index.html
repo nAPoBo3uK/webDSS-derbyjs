@@ -1,36 +1,44 @@
-<import: src="./home">
+<import: src="./voting">
 <import: src="./login">
 <import: src="./registration">
 
 <Title:>
     webDSS
-
-<Body:>
-    <div class="navbar navbar-inverse" role="navigation">
-        <div class="container">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">DSS</a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <view name="nav-link" href="/">Информация</view>
-                    <view name="nav-link" href="/login">Логин</view>
-                </ul>
-            </div>
-        </div>
-    </div>
-
-
+<Head:>
     {{if _session.flash.error}}
     <div class="container">
+
         {{each _session.flash.error as #error}}
         <div class="alert alert-warning">{{#error}}</div>
         {{/}}
     </div>
     {{/}}
 
+    <Body:>
 
-    <view name="{{$render.ns}}"></view>
+    <div class="navbar navbar-inverse" role="navigation">
+
+            <div class="navbar-header">
+                <a class="navbar-brand" href="/"><b>DSS</b></a>
+            </div>
+            <div class="collapse navbar-collapse">
+                <ul class="nav navbar-nav">
+                    <view name="nav-link" href="/voting">Голосования</view>
+                    <view name="nav-link" href="/users">Пользователи</view>
+                </ul>
+                <form class="navbar-form navbar-left" role="search">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Найти">
+                    </div>
+                </form>
+
+                <h4 class="text-right">{{_page.user.local.username}}
+                <a class="btn btn-danger" href="/logout">Выйти</a></h4>
+            </div>
+    </div>
+<view name="{{$render.ns}}"></view>
+
+
 
     <nav-link: element="nav-link">
         <li class="{{if $render.url === @href}}active{{/}}">

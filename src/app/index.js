@@ -12,7 +12,34 @@ app.loadStyles(__dirname + '/../../views/styles');
 app.get('*', userExists);
 
 app.get('/', function (page, model){
-    page.render('home');
+    page.redirect('voting');
+});
+
+app.get('/voting', function (page, model, params){
+
+  /*  var user = model.at('auths.' + model.get('_session.userId'));
+   // var query = model.query('voting', {owner: model.get('_session.userId')});
+   model.subscribe(query, function(){
+        model.add('voting',{name: 'Выбор тачки', date: new Date()})*/
+
+    page.render('voting');
+  //  })
+
+});
+app.get('/voting/new', function (page, model){
+    page.render('voting');
+});
+
+app.post('/voting/new', function (page, model){
+ page.render('voting');
+
+});
+app.get('/voting/:id', function (page, model, params){
+    model.set('_page.voting','Voting' + params.id);
+    page.render('voting');
+});
+app.get('/users', function (page, model){
+    page.render('users');
 });
 
 app.get('/login', function (page, model){
