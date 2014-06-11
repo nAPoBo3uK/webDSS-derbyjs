@@ -1,6 +1,8 @@
 <import: src="./voting">
 <import: src="./login">
 <import: src="./registration">
+<import: src="./navigation">
+<import: src="./account">
 
 <Title:>
     webDSS
@@ -15,34 +17,7 @@
     </div>
     {{/}}
 
-    <Body:>
+<Body:>
+    <view name="navigation"></view>
+    <view name="{{$render.ns}}"></view>
 
-    <div class="navbar navbar-inverse" role="navigation">
-
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/"><b>DSS</b></a>
-            </div>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <view name="nav-link" href="/voting">Голосования</view>
-                    <view name="nav-link" href="/users">Пользователи</view>
-                </ul>
-                <form class="navbar-form navbar-right" role="search">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Найти">
-                    </div>
-                </form>
-
-                <h4 class="text-right">{{_page.user.local.username}}
-
-                <a class="btn btn-danger" href="/logout">Выйти</a></h4>
-            </div>
-    </div>
-<view name="{{$render.ns}}"></view>
-
-
-
-    <nav-link: element="nav-link">
-        <li class="{{if $render.url === @href}}active{{/}}">
-            <a href="{{@href}}">{{@content}}</a>
-        </li>

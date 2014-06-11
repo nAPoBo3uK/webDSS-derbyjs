@@ -1,6 +1,13 @@
+<import: src="./participants">
+
 <index:>
     <div class="container-fluid">
 
+        <a class="btn btn-lg btn-success" href="/voting?action=new">Новое</a>
+        <view name="{{if _page.voting}}voting{{else}}new{{/}}"></view>
+        <view name="participants"></view>
+    </div>
+    <list:>
         <div class="col-xs-3">
 
             <table class="table table-hover">
@@ -9,31 +16,28 @@
                     <th>Название</th>
                     <th>Создан</th>
                     <th>Роль</th>
+                    <th></th>
                 </tr>
                 </thead>
                 {{if _page.votings}}
 
-                    <tbody>
-                    {{each _page.votings as #voting}}
-                        <tr>
-                            <td>{{#voting.name}}</td>
-                            <td>{{toLocaleString(#voting.timeCreated)}}</td>
-                            <td>{{#voting.role}}</td>
-                            <td>
-                                <button type="button" class="btn btn-default btn-xs" on-click="model.del('votings.' + #voting.id)">
-                                    <b>X</b>
-                                </button>
-                            </td>
-                        </tr>
-                    {{/each}}
-                    </tbody>
+                <tbody>
+                {{each _page.votings as #voting}}
+                <tr>
+                    <td>{{#voting.name}}</td>
+                    <td>{{toLocaleString(#voting.timeCreated)}}</td>
+                    <td>{{#voting.role}}</td>
+                    <td>
+                        <button type="button" class="btn btn-default btn-xs" on-click="model.del('votings.' + #voting.id)">
+                            <b>X</b>
+                        </button>
+                    </td>
+                </tr>
+                {{/each}}
+                </tbody>
                 {{/}}
             </table>
         </div>
-
-    <a class="btn btn-lg btn-success" href="/voting?action=new">Новое</a>
-    <view name="{{if _page.voting}}voting{{else}}new{{/}}"></view>
-    </div>
     <new:>
         <div class="col-xs-6">
             <form role="form" on-submit="addVoting(_page.voting)">
@@ -55,9 +59,7 @@
             </form>
 
         </div>
-        <div class="col-xs-3">
-            <h4>Участники</h4>
-        </div>
+
    <voting:>
         <div class="container">
             <h1>{{_page.voting}}</h1>

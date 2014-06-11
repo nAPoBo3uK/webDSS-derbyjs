@@ -36,6 +36,10 @@ app.get('/users', function (page, model){
     page.render('users');
 });
 
+app.get('/account', function (page, model){
+    page.render('account');
+});
+
 app.get('/login', function (page){ page.redirect('/'); });
 app.get('/registration', function (page){ page.redirect('/'); });
 
