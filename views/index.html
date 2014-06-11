@@ -5,22 +5,7 @@
 <Title:>
     webDSS
 <Head:>
-    <ul id="todo-list">
-        {{each _page.todos as #todo, #index}}
-        <li class="{{if #todo.completed}}completed{{/}}">
 
-            <div class="view">
-                <input class="toggle" type="checkbox" checked="{{#todo.completed}}">
-                <label>{{#todo.text}}</label>
-                <button class="destroy"> </button>
-            </div>
-            <form>
-                <input class="edit">
-            </form>
-
-        </li>
-        {{/each}}
-    </ul>
     {{if _session.flash.error}}
     <div class="container">
 

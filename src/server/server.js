@@ -47,13 +47,3 @@ exports.setup = function (app, options) {
 
     return expressApp;
 }
-
-
-/*
-function createUserId(req, res, next) {
-    var model = req.getModel();
-    var userId = req.session.userId;
-    if (!userId) userId = req.session.userId = model.id();
-    model.set('_session.userId', userId);
-    next();
-}*/

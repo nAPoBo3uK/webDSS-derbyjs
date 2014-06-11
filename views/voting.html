@@ -11,14 +11,19 @@
                     <th>Роль</th>
                 </tr>
                 </thead>
-                {{if voting}}
+                {{if _page.votings}}
 
                     <tbody>
-                    {{each voting}}
+                    {{each _page.votings as #voting}}
                         <tr>
-                            <td>{{this.name}}</td>
-                            <td>{{this.description}}</td>
-                            <td></td>
+                            <td>{{#voting.name}}</td>
+                            <td>{{toLocaleString(#voting.timeCreated)}}</td>
+                            <td>{{#voting.role}}</td>
+                            <td>
+                                <button type="button" class="btn btn-default btn-xs" on-click="model.del('votings.' + #voting.id)">
+                                    <b>X</b>
+                                </button>
+                            </td>
                         </tr>
                     {{/each}}
                     </tbody>
@@ -26,7 +31,7 @@
             </table>
         </div>
 
-    <a class="btn btn-lg btn-success" href="/voting/new">Новое</a>
+    <a class="btn btn-lg btn-success" href="/voting?action=new">Новое</a>
     <view name="{{if _page.voting}}voting{{else}}new{{/}}"></view>
     </div>
     <new:>
@@ -37,7 +42,7 @@
                     <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.voting.name}}" required autofocus>
                 </div>
                 <div class="form-group">
-                    <textarea class="form-control" placeholder="Описание"  rows="3" value="{{_page.voting.description}}"></textarea>
+                    <textarea class="form-control" placeholder="Описание"  rows="3">{{_page.voting.description}}</textarea>
                 </div>
                 <h4>Кандидаты</h4>
 
