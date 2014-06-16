@@ -1,66 +1,57 @@
-<import: src="./participants">
-
-<index:>
-    <div class="container-fluid">
-
-        <a class="btn btn-lg btn-success" href="/voting?action=new">Новое</a>
-        <view name="{{if _page.voting}}voting{{else}}new{{/}}"></view>
-        <view name="participants"></view>
-    </div>
-    <list:>
-        <div class="col-xs-3">
-
-            <table class="table table-hover">
-                <thead>
+<list:>
+    {{@content}}
+    <div class="scrollable">
+        <table class="table table-hover">
+            <thead>
                 <tr>
                     <th>Название</th>
                     <th>Создан</th>
-                    <th>Роль</th>
+                    <th>Статус</th>
                     <th></th>
                 </tr>
-                </thead>
-                {{if _page.votings}}
+            </thead>
+            {{if _page.votings}}
+                <list-row-group name="Свои" data="{{_page.votings.own}}"></list-row-group>
+                <list-row-group name="Эксперт" data="{{_page.votings.expert}}"></list-row-group>
+                <list-row-group name="Наблюдатель" data="{{_page.votings.observer}}"></list-row-group>
+             {{/}}
+        </table>
+    </div>
 
-                <tbody>
-                {{each _page.votings as #voting}}
-                <tr>
-                    <td>{{#voting.name}}</td>
-                    <td>{{toLocaleString(#voting.timeCreated)}}</td>
-                    <td>{{#voting.role}}</td>
-                    <td>
-                        <button type="button" class="btn btn-default btn-xs" on-click="model.del('votings.' + #voting.id)">
-                            <b>X</b>
-                        </button>
-                    </td>
-                </tr>
-                {{/each}}
-                </tbody>
-                {{/}}
-            </table>
+<new:>
+    <form role="form" on-submit="addVoting(_page.voting)">
+        <h3>Новое голосование</h3>
+        <div class="form-group">
+            <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.voting.name}}" required autofocus>
         </div>
-    <new:>
-        <div class="col-xs-6">
-            <form role="form" on-submit="addVoting(_page.voting)">
-                <h3>Новое голосование</h3>
-                <div class="form-group">
-                    <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.voting.name}}" required autofocus>
-                </div>
-                <div class="form-group">
-                    <textarea class="form-control" placeholder="Описание"  rows="3">{{_page.voting.description}}</textarea>
-                </div>
-                <h4>Кандидаты</h4>
-
-                    <input type="text" placeholder="Имя кандидата">
-
-                <div class="form-group">
-                    <button class="btn btn-primary btn-lg" type="submit">Создать</button>
-                    <a class="btn btn-lg btn-default" href="/voting">Отмена</a>
-                </div>
-            </form>
-
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Описание"  rows="3">{{_page.voting.description}}</textarea>
         </div>
+        <h4>Кандидаты</h4>
+            <input type="text" placeholder="Имя кандидата">
+        <mode-controls></mode-controls>
+    </form>
 
-   <voting:>
-        <div class="container">
-            <h1>{{_page.voting}}</h1>
-        </div>
+<view:>
+    <div class="container">
+        {{with _page.voting}}
+        <h1>{{this.name}}</h1>
+        <span>{{this.description}}</span>
+        {{/}}
+    </div>
+
+
+
+<list-row: element="list-row">
+    <tr on-click="page.redirect($render.ns + '/' + @index)">
+        <td>{{@data.name}}</td>
+        <td>{{@data.timeCreated}}</td>
+        <td>{{@data.status}}</td>
+        <td>
+            <button type="button" class="btn btn-default btn-xs" on-click="delVoting(@data.id)">
+                <b>X</b>
+            </button>
+        </td>
+    </tr>
+
+

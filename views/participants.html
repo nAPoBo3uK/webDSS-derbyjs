@@ -1,6 +1,38 @@
-<index:>
-    <div class="col-xs-3">
-        <h4>Участники</h4>
-        dsfdsfsdfdsds
-        egfdg@@@@@
+<index: element="participants">
+    <h4>Участники</h4>
+    <div class="scrollable">
+        <table class="table table-hover">
+
+            {{if _page.usersList}}
+
+            <list data="{{_page.voting.participants}}"></list>
+            {{/}}
+        </table>
     </div>
+
+    <list: element="list">
+        {{if @data}}
+
+        <tbody>
+        {{each @data}}
+            <tr>
+                <td>{{@data.username}}<br><small>{{@data.email}}</small></td>
+                <td>{{@data.specialism}}</td>
+
+                <td>
+                    {{if @data.createdBy === _page.user.id}}
+                    <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
+                        <b>X</b>
+                    </button>
+                    {{/}}
+                </td>
+                <td>
+                    <button type="button" class="btn btn-default btn-xs" on-click="delUserfromparticipants(@data.id)">
+                        <b>-></b>
+                    </button>
+                </td>
+            </tr>
+        {{/each}}
+        </tbody>
+        {{/}}
+

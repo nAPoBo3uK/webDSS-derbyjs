@@ -1,23 +1,58 @@
 <import: src="./voting">
 <import: src="./login">
+<import: src="./users">
 <import: src="./registration">
 <import: src="./navigation">
 <import: src="./account">
+<import: src="./participants">
 
 <Title:>
     webDSS
 <Head:>
-
     {{if _session.flash.error}}
-    <div class="container">
-
-        {{each _session.flash.error as #error}}
-        <div class="alert alert-warning">{{#error}}</div>
-        {{/}}
-    </div>
+        <div class="container">
+            {{each _session.flash.error as #error}}
+                <div class="alert alert-warning">{{#error}}</div>
+            {{/}}
+        </div>
     {{/}}
 
 <Body:>
     <view name="navigation"></view>
-    <view name="{{$render.ns}}"></view>
+    <div class="container-fluid">
+        <div class="col-xs-3">
+            <view name="{{$render.ns}}:list">
+                <form class="form-inline">
+                    <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Найти">
+                    </div>
+                    <a class="btn btn-success" href="/{{$render.ns}}?action=new">Добавить</a>
+                </form>
+            </view>
+        </div>
+        <div class="col-xs-6">
+            {{if _page.mode}}
+            <view name="{{$render.ns}}:{{_page.mode}}"></view>
+            {{/}}
+        </div>
 
+        <div class="col-xs-3">
+            <participants></participants>
+        </div>
+    </div>
+
+<mode-controls: element="mode-controls">
+    <div class="form-group">
+        <button class="btn btn-primary btn-lg" type="submit">Сохранить</button>
+        <a class="btn btn-lg btn-default" href="{{$render.url}}">Отмена</a>
+    </div>
+
+    <list-row-group: element="list-row-group">
+        {{if @data}}
+        <thead><tr><th>{{@name}}</th></tr></thead>
+        <tbody>
+        {{each @data as #row, #index}}
+        <view name = "{{$render.ns}}:list-row" data="{{#row}}" index="{{#index}}"></view>
+        {{/each}}
+        </tbody>
+        {{/}}
