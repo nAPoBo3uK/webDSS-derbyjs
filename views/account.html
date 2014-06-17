@@ -1,4 +1,4 @@
-<view:>
+<index:>
     <div class="container">
         <h1>
             Аккаунт
@@ -11,8 +11,8 @@
             <p><b>О себе:</b> <p>{{this.description}}</p></p>
         {{/}}
         {{with _page.user.timestamps}}
-            <p><b>Зарегистрирован:</b> {{this.registered}}</p>
-            <p><b>Заходил:</b> {{this.loggedin}}</p>
+            <p><b>Зарегистрирован:</b> {{formatDate(this.registered)}}</p>
+            <p><b>Заходил:</b> {{formatDate(this.loggedin)}}</p>
         {{/}}
     </div>
 <list:>

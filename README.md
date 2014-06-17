@@ -8,8 +8,11 @@ Decision support system based on voting methods of Borda, Condorce, Simpson and 
 ###Ubuntu
 
 1. Install NodeJS with npm
+
 `sudo apt-get install python-software-properties` 
+
 `sudo add-apt-repository ppa:chris-lea/node.js`
+
 `sudo apt-get update`
        
 `sudo apt-get install nodejs`
@@ -23,8 +26,10 @@ Decision support system based on voting methods of Borda, Condorce, Simpson and 
 `sudo apt-get update`
 
 `sudo apt-get install mongodb-org`
+
 3. Install node modules 
 `sudo npm install`
+
 4. Try it [http://localhost:3000/](http://localhost:3000/)
 
 ## MIT License

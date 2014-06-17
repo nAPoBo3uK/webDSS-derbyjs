@@ -1,10 +1,11 @@
-<import: src="./voting">
+<import: src="./votings">
 <import: src="./login">
 <import: src="./users">
 <import: src="./registration">
 <import: src="./navigation">
 <import: src="./account">
 <import: src="./participants">
+<import: src="./access-error">
 
 <Title:>
     webDSS
@@ -26,18 +27,28 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Найти">
                     </div>
-                    <a class="btn btn-success" href="/{{$render.ns}}?action=new">Добавить</a>
+                    <a class="btn btn-success" on-click="setMode('new')">Добавить</a>
                 </form>
             </view>
         </div>
         <div class="col-xs-6">
             {{if _page.mode}}
-            <view name="{{$render.ns}}:{{_page.mode}}"></view>
+                <view name="{{$render.ns}}:{{_page.mode}}"></view>
             {{/}}
         </div>
 
         <div class="col-xs-3">
-            <participants></participants>
+
+                {{if $render.ns==='voting'}}
+                    <a class="btn btn-success" href="/users?votingid={{_page.selected.id}}">Добавить</a>
+                    <participants></participants>
+                {{else if _page.selectedVoting}}
+                    <h3>{{_page.voting.name}}</h3>
+                    <span>{{_page.voting.description}}</span>
+                    <participants></participants>
+                {{/}}
+
+
         </div>
     </div>
 

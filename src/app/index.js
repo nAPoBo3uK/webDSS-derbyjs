@@ -1,39 +1,27 @@
 var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
 
-
 global.app = app;
 
 app.use(require('d-bootstrap'));
-
 
 app.loadViews (__dirname + '/../../views');
 app.loadStyles(__dirname + '/../../styles');
 
 app.get('*', userExists);
+app.get('*', queryProcessor);
 
-app.get('*', setAction);
 app.get('/', function (page, model){
-    page.redirect('voting');
+    page.redirect('votings');
 });
 
-app.get('/voting', function (page, model, params){
 
-
-
-   switch(params.query.action){
-        case 'new':
-            break;
-        case 'view':
-            model.ref('_page.voting','votings.' + params.query.id)
-            break;
-    }
-
+app.get('/votings', function (page, model, params){
     var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
-        userVotings.ref('_page.votings.own');
-        page.render('voting');
-    });
+        userVotings.ref('_page.votingsList');
 
+        page.render('votings');
+   });
 
 });
 
@@ -41,9 +29,15 @@ app.get('/voting', function (page, model, params){
 app.get('/users', function (page, model, params){
     var usersQuery = model.query('auths', {});
     usersQuery.subscribe(function(){
-        usersQuery.ref('_page.usersList.other');
+        usersQuery.ref('_page.usersList');
+        switch(params.query.action){
+            case 'view':
+                model.set('_page.selectedUser', model.get('_page.usersList')[params.query.id]);
+                break;
+        }
         page.render('users');
     })
+
 
 });
 
@@ -68,16 +62,21 @@ function userExists(page, model, params, next){
     } else page.render('login');
 }
 
-function setAction(page, model, params, next){
-    model.set('_page.mode', params.query.action);
-    next();
+function queryProcessor(page, model, params, next){
+        var userId = model.get('_session.userId');
+       /* if(params.query.votingid){
+            // TODO: add access differentiation
+            model.ref('_page.selectedVoting','votings.' + params.query.votingid);
+        }*/
+        next();
 }
 app.proto.addVoting = function(newVoting){
     console.log('addVoting '); console.log(newVoting);
     if (!newVoting) return;
     var model = this.model;
     var userId = model.get('_session.userId');
-    newVoting.timeCreated = new Date();
+    var now = new Date();
+    newVoting.timeCreated = now.getTime();
     newVoting.owner = [userId];
     model.add('votings', newVoting);
     this.model.set('_page.newVoting', '');
@@ -96,16 +95,33 @@ app.proto.delVoting = function(votingId){
    this.model.del('votings.' + votingId);
 
 }
-app.proto.toLocaleString = function(date){
+app.proto.setMode = function(mode){
+    this.model.set('_page.mode', mode);
+}
+app.proto.view = function(id){
+    console.log('view');
+    var entity = this.model.get('$render.ns');
+    this.setMode('view');
+    this.model.ref('_page.selected', '_page.' + entity + 'List.' + id);
+
+
+}
+
+app.proto.formatDate = function(date){
     if(date){
-        var d = Date(date);
-        console.log(date);
-       // return date.getDay()+'/'+date.getMounth()+'/'+date.getYear();
-        return date+'';
+        var d = new Date(date);
+
+        var dd = d.getDate();
+        if (dd<10) dd= '0'+dd;
+
+        var mm = d.getMonth() + 1;  // месяц 1-12
+        if (mm<10) mm= '0'+mm;
+
+        var yy = d.getFullYear() % 100;
+        if (yy<10) yy= '0'+yy;
+
+        return dd+'.'+mm+'.'+yy;
     }
 
 }
 
-app.proto.redirect=function(path){
-    document
-}

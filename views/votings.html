@@ -1,0 +1,70 @@
+<list:>
+    {{@content}}
+    <div class="scrollable">
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Название</th>
+                    <th>Создан</th>
+                    <th>Статус</th>
+                    <th></th>
+                </tr>
+            </thead>
+            {{if _page.votingsList}}
+                <list-row-group name="Все" data="{{_page.votingsList}}"></list-row-group>
+               <!-- <list-row-group name="Эксперт" data="{{_page.votings.expert}}"></list-row-group>
+                <list-row-group name="Наблюдатель" data="{{_page.votings.observer}}"></list-row-group> -->
+             {{/}}
+        </table>
+    </div>
+
+<new:>
+    <form role="form" on-submit="addVoting(_page.newVoting)">
+        <h3>Новое голосование</h3>
+        {{with _page.newVoting}}
+            <div class="form-group">
+                <input name="name" type="text" class="form-control" placeholder="Название" value="{{this.name}}" required autofocus>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Описание"  rows="3">{{this.description}}</textarea>
+            </div>
+            <h4>Кандидаты</h4>
+                <button class="btn btn-success" on-click="addCandidat()">Новый кандидат</button>
+                {{if this.candidats}}
+                    <table>
+                        {{each this.candidats as #line}}
+                        <tr>
+                            {{each #line as #cell}}
+                                <td>#cell</td>
+                            {{/}}
+                        </tr>
+                        {{/}}
+                    </table>
+                {{/}}
+        {{/}}
+        <mode-controls></mode-controls>
+    </form>
+
+<view:>
+    <div class="container">
+        {{with _page.selected}}
+        <h1>{{this.name}}</h1>
+        <span>{{this.description}}</span>
+        {{/}}
+    </div>
+
+
+
+<list-row: element="list-row">
+    <tr on-click="view(@index)">
+        <td>{{@data.name}}</td>
+        <td>{{formatDate(@data.timeCreated)}}</td>
+        <td>{{@data.status}}</td>
+        <td>
+            <button type="button" class="btn btn-default btn-xs" on-click="delVoting(@data.id)">
+                <b>X</b>
+            </button>
+        </td>
+    </tr>
+
+

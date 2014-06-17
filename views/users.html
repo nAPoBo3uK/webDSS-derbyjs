@@ -11,8 +11,8 @@
             </tr>
             </thead>
             {{if _page.usersList}}
-            <list-row-group name="Добавленные" data="{{_page.usersList.own}}"></list-row-group>
-            <list-row-group name="Остальные" data="{{_page.usersList.other}}"></list-row-group>
+            <list-row-group name="Все" data="{{_page.usersList}}"></list-row-group>
+            <!--<list-row-group name="Остальные" data="{{_page.usersList.other}}"></list-row-group>-->
             {{/}}
         </table>
     </div>
@@ -38,19 +38,24 @@
 
         <view:>
             <div class="container">
-                {{with _page.voting}}
-                <h1>{{this.name}}</h1>
+
+            {{if _page.selected}}
+                <h2>{{_page.selected.name}}</h2>
+                {{with _page.selected.local}}
+                <h1>{{this.username}}</h1>
+                <h4>{{this.specialism}}</h4>
                 <span>{{this.description}}</span>
                 {{/}}
+            {{/}}
             </div>
 
 
-
         <list-row:>
-            <tr on-click="page.redirect($render.ns + '/' + @data.id)">
-                <td>{{@data.username}}<br><small>{{@data.email}}</small></td>
-                <td>{{@data.specialism}}</td>
-
+            <tr on-click="view(@index)">
+                {{with @data.local}}
+                <td>{{this.username}}<br><small>{{this.email}}</small></td>
+                <td>{{this.specialism}}</td>
+                {{/}}
                 <td>
                     {{if @data.createdBy === _page.user.id}}
                     <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
