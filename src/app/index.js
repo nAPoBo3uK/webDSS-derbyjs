@@ -1,7 +1,9 @@
 var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
+var candidats = require('./candidats');
 
 global.app = app;
+
 
 app.use(require('d-bootstrap'));
 
@@ -27,6 +29,7 @@ app.get('/votings', function (page, model, params){
 
 
 app.get('/users', function (page, model, params){
+
     var usersQuery = model.query('auths', {});
     usersQuery.subscribe(function(){
         usersQuery.ref('_page.usersList');
@@ -89,12 +92,15 @@ app.on('model', function(model) {
     });
 
 });
+app.component('votings:candidats', candidats);
+
 // votinglist
 app.proto.delVoting = function(votingId){
     console.log('delVoting'); console.log(votingId);
    this.model.del('votings.' + votingId);
 
 }
+
 app.proto.setMode = function(mode){
     this.model.set('_page.mode', mode);
 }

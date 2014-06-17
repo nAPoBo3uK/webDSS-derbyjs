@@ -1,3 +1,4 @@
+
 <list:>
     {{@content}}
     <div class="scrollable">
@@ -28,20 +29,8 @@
             <div class="form-group">
                 <textarea class="form-control" placeholder="Описание"  rows="3">{{this.description}}</textarea>
             </div>
-            <h4>Кандидаты</h4>
-                <button class="btn btn-success" on-click="addCandidat()">Новый кандидат</button>
-                {{if this.candidats}}
-                    <table>
-                        {{each this.candidats as #line}}
-                        <tr>
-                            {{each #line as #cell}}
-                                <td>#cell</td>
-                            {{/}}
-                        </tr>
-                        {{/}}
-                    </table>
-                {{/}}
         {{/}}
+            <candidats table = {{_page.newVoting.candidats}}></candidats>
         <mode-controls></mode-controls>
     </form>
 
@@ -68,3 +57,32 @@
     </tr>
 
 
+    <candidats: element="candidats">
+        <h4>Кандидаты</h4>
+        <p>
+
+            {{if @table}}
+
+        <table class="table-bordered">
+            {{each @table as #line, #r}}
+            <tr>
+                {{each #line as #cell, #c}}
+                    {{if #r==0}}
+                        {{if #c==0}}
+                            <th><button type="button" class="btn btn-success" on-click="addCandidat(#r)">Новый кандидат</button></th>
+                        {{else}}
+                            <th>header<button type="button" class="btn btn-danger btn-sm" on-click="delCriteria(#c)">х</button></th>
+                        {{/}}
+                    {{else}}
+                        {{if #c==0}}
+                            <td>ddd<input value="{{#cell}}"/></td>
+                        {{/}}
+                    {{/}}
+                {{/}}
+            </tr>
+            {{/}}
+        </table>
+        {{/}}
+
+        <button type="button" class="btn btn-warning" on-click="addCriteria()">Критерий</button>
+        </p>
