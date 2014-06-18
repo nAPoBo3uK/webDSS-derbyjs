@@ -63,12 +63,12 @@
             <button type="button" class="btn btn-success" on-click="addCandidat(#r)">Новый кандидат</button>
             {{if table}}
                 <table class="table-bordered">
-                    {{each table}}
+                    {{each table as #row}}
                         <tr>
 
-                            {{each this}}
+                            {{each #row as #cell}}
                                 <td>
-                                    @
+                                    {{#cell}}@
                                 </td>
                             {{/}}
 

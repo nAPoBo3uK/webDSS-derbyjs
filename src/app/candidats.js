@@ -10,11 +10,14 @@ Candidats.prototype.addCandidat = function(){
     var table = this.model.at('table');
     var matrix = table.get();
     if(matrix && matrix.length) {
+        var emptyRow = [];
         for (var i = 0; i < matrix[0].length; i++)
-            table.at((+table.push() - 1).toString()).push('');
+            emptyRow.push('');
+        console.log(emptyRow);
+        table.push(emptyRow);
     } else {
-        table.push('');
-        table.at('0').push('');
+        table.push(['']);
+
     }
 
 
