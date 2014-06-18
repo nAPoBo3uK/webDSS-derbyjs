@@ -47,6 +47,14 @@ Table.prototype.delCol = function(col){
     }));
 
 }
+Table.prototype.setEditMode = function(){
+    if(this.model.get('editMode')){
+        this.model.set('editMode',false);
+    } else {
+        this.model.set('editMode',true);
+    }
+
+}
 
 Table.prototype.init = function(){
     console.log('Table component init');

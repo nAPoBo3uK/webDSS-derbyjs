@@ -1,7 +1,22 @@
 <index: element="candidats">
-    <h4>Кандидаты</h4>
+    <h4>
+        {{if @editable}}
+        <button type="button" class="btn btn-default" on-click="setEditMode()">
+            <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        {{/}}
+        Кандидаты
+    </h4>
     <p>
         {{if table}}
+            {{if editMode}}
+                <editable-table></editable-table>
+            {{else}}
+                <view-table></view-table>
+            {{/}}
+        {{/}}
+    </p>
+<editable-table: element="editable-table">
     <table class="table table-bordered">
         {{each table as #row, #r}}
         <tr>
@@ -14,13 +29,13 @@
             {{else}}
             <th on-click="editCell(#cell, #r, #c)">
                 <editable-cell>
-                                                <span>
-                                                    {{if #cell}}
-                                                        {{#cell}}
-                                                    {{else}}
-                                                        Критерий {{#c}}
-                                                    {{/}}
-                                                </span>
+                    <span>
+                        {{if #cell}}
+                            {{#cell}}
+                        {{else}}
+                            Критерий {{#c}}
+                        {{/}}
+                    </span>
                     <button type="button" class="btn btn-danger" on-click="delCol(#c)">x</button>
                 </editable-cell>
             </th>
@@ -31,13 +46,13 @@
             <th on-click="editCell(#cell, #r, #c)">
                 <editable-cell>
                     <button type="button" class="btn btn-danger" on-click="delRow(#r)">х</button>
-                                                <span>
-                                                    {{if #cell}}
-                                                        {{#cell}}
-                                                    {{else}}
-                                                        Кандидат {{#r}}
-                                                    {{/}}
-                                                </span>
+                        <span>
+                            {{if #cell}}
+                                {{#cell}}
+                            {{else}}
+                                Кандидат {{#r}}
+                            {{/}}
+                        </span>
                 </editable-cell>
             </th>
             {{else}}
@@ -51,20 +66,38 @@
         </tr>
         {{/}}
     </table>
-    {{/}}
+
     <button type="button" class="btn btn-success" on-click="addRow()">
         <b>+</b>
         кандидат
     </button>
 
-    </p>
 
-    <editable-cell: element="editable-cell">
-
-        <form on-submit="doneEditing()">
-            {{if edit.row===#r && edit.col===#c}}
-            <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+<view-table: element="view-table">
+    <table class="table table-bordered">
+        {{each table as #row, #r}}
+            {{if #r===0}}
+                <thead>
+                    <tr>
+                        {{each #row as #cell, #c}}
+                            <th><span>{{#cell}}</span></th>
+                        {{/}}
+                    </tr>
+                </thead>
             {{else}}
-            {{@content}}
+                <tr>
+                    {{each #row as #cell, #c}}
+                        <td><span>{{#cell}}</span></td>
+                    {{/}}
+                </tr>
             {{/}}
-        </form>
+        {{/}}
+    </table>
+<editable-cell: element="editable-cell">
+    <form on-submit="doneEditing()">
+        {{if edit.row===#r && edit.col===#c}}
+        <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+        {{else}}
+        {{@content}}
+        {{/}}
+    </form>

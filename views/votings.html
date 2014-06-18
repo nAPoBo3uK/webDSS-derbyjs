@@ -15,6 +15,7 @@
         <p>{{this.description}}</p>
         <hr>
         {{/}}
+
         <candidats table = {{_state.votings.selected.candidats}}></candidats>
     </div>
 <list:>
@@ -48,7 +49,7 @@
                 <textarea class="form-control" placeholder="Описание"  rows="3">{{this.description}}</textarea>
             </div>
         {{/}}
-            <candidats table = {{_page.newVoting.candidats}}></candidats>
+            <candidats table = {{_page.newVoting.candidats}} editable></candidats>
         <mode-controls></mode-controls>
     </form>
 
