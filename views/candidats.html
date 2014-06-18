@@ -1,0 +1,70 @@
+<index: element="candidats">
+    <h4>Кандидаты</h4>
+    <p>
+        {{if table}}
+    <table class="table table-bordered">
+        {{each table as #row, #r}}
+        <tr>
+            {{each #row as #cell, #c}}
+            {{if #r===0}}
+            {{if #c===0}}
+            <th>
+                <button type="button" class="btn btn-warning" on-click="addCol()">Критерий</button>
+            </th>
+            {{else}}
+            <th on-click="editCell(#cell, #r, #c)">
+                <editable-cell>
+                                                <span>
+                                                    {{if #cell}}
+                                                        {{#cell}}
+                                                    {{else}}
+                                                        Критерий {{#c}}
+                                                    {{/}}
+                                                </span>
+                    <button type="button" class="btn btn-danger" on-click="delCol(#c)">x</button>
+                </editable-cell>
+            </th>
+            {{/}}
+
+            {{else}}
+            {{if #c===0}}
+            <th on-click="editCell(#cell, #r, #c)">
+                <editable-cell>
+                    <button type="button" class="btn btn-danger" on-click="delRow(#r)">х</button>
+                                                <span>
+                                                    {{if #cell}}
+                                                        {{#cell}}
+                                                    {{else}}
+                                                        Кандидат {{#r}}
+                                                    {{/}}
+                                                </span>
+                </editable-cell>
+            </th>
+            {{else}}
+            <td on-click="editCell(#cell, #r, #c)">
+                <editable-cell>{{#cell}}</editable-cell>
+            </td>
+
+            {{/}}
+            {{/}}
+            {{/}}
+        </tr>
+        {{/}}
+    </table>
+    {{/}}
+    <button type="button" class="btn btn-success" on-click="addRow()">
+        <b>+</b>
+        кандидат
+    </button>
+
+    </p>
+
+    <editable-cell: element="editable-cell">
+
+        <form on-submit="doneEditing()">
+            {{if edit.row===#r && edit.col===#c}}
+            <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+            {{else}}
+            {{@content}}
+            {{/}}
+        </form>

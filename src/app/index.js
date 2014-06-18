@@ -1,8 +1,9 @@
 var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
-var candidats = require('./candidats');
+var tableEditable = require('./table-editable');
 
 global.app = app;
+global.derby = derby;
 
 
 app.use(require('d-bootstrap'));
@@ -10,23 +11,35 @@ app.use(require('d-bootstrap'));
 app.loadViews (__dirname + '/../../views');
 app.loadStyles(__dirname + '/../../styles');
 
+app.component('votings:candidats', tableEditable);
+
 app.get('*', userExists);
 
 
 app.get('/', function (page, model){
     page.redirect('votings');
 });
+/*
+app.get('/votings/:action', function (page, model, params, next){
+    console.log(params);
 
+    model.set('_page.selected','sdsdsdsd');
 
-app.get('/votings', function (page, model, params){
+    //console.log(model.get());
+    page.redirect('votings');
+
+});*/
+
+app.get('/votings', function (page, model, params, next){
+    console.log(params)
     var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
         userVotings.ref('_page.votingsList');
 
         page.render('votings');
+      //  next();
    });
 
 });
-
 
 app.get('/users', function (page, model, params){
 
@@ -85,7 +98,7 @@ app.on('model', function(model) {
     });
 
 });
-app.component('votings:candidats', candidats);
+
 
 // votinglist
 app.proto.delVoting = function(votingId){

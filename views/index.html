@@ -7,7 +7,6 @@
 <import: src="./participants">
 <import: src="./access-error">
 
-
 <Title:>
     webDSS
 <Head:>
@@ -38,17 +37,14 @@
             {{/}}
         </div>
         <div class="col-xs-3">
-
-                {{if $render.ns==='voting'}}
-                    <a class="btn btn-success" href="/users?votingid={{_page.selected.id}}">Добавить</a>
-                    <participants></participants>
-                {{else if _page.selectedVoting}}
-                    <h3>{{_page.voting.name}}</h3>
-                    <span>{{_page.voting.description}}</span>
-                    <participants></participants>
-                {{/}}
-
-
+            {{if $render.ns==='votings'}}
+                <a class="btn btn-success" href="/users?votingid={{_page.selected.id}}">Добавить</a>
+                <participants></participants>
+            {{else if _page.selectedVoting}}
+                <h3>{{_page.voting.name}}</h3>
+                <span>{{_page.voting.description}}</span>
+                <participants></participants>
+            {{/}}
         </div>
     </div>
 

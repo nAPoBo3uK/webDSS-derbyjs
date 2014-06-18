@@ -1,11 +1,11 @@
 /**
  * Created by bolehivsky on 18.06.14.
  */
-var Candidats = function(){
+var Table = function(){
 
 }
 
-Candidats.prototype.addRow = function(){
+Table.prototype.addRow = function(){
     console.log('newRow');
     var table = this.model.at('table');
     var matrix = table.get();
@@ -16,7 +16,7 @@ Candidats.prototype.addRow = function(){
     table.push(emptyRow);
 }
 
-Candidats.prototype.addCol = function(){
+Table.prototype.addCol = function(){
     console.log('add col');
     var table = this.model.at('table');
     var matrix = table.get();
@@ -27,7 +27,7 @@ Candidats.prototype.addCol = function(){
     console.log(this.model.get());
 }
 
-Candidats.prototype.delRow = function(row){
+Table.prototype.delRow = function(row){
     console.log('del row ' + row);
     var table = this.model.at('table');
     console.log(table.get());
@@ -35,7 +35,7 @@ Candidats.prototype.delRow = function(row){
 
 }
 
-Candidats.prototype.delCol = function(col){
+Table.prototype.delCol = function(col){
     console.log('del col ' + col);
     var table = this.model.at('table');
     var matrix = table.get();
@@ -48,8 +48,8 @@ Candidats.prototype.delCol = function(col){
 
 }
 
-Candidats.prototype.init = function(){
-    console.log('candidats component init');
+Table.prototype.init = function(){
+    console.log('Table component init');
     this.model.at('table')
     var table = this.model.at('table');
     var matrix = table.get();
@@ -58,8 +58,8 @@ Candidats.prototype.init = function(){
     }
 }
 
-Candidats.prototype.editCell = function(cell, row, col){
-
+Table.prototype.editCell = function(cell, row, col){
+    var self = this;
     this.model.set('edit', {
         row: row,
         col: col,
@@ -67,21 +67,26 @@ Candidats.prototype.editCell = function(cell, row, col){
     });
 
     window.getSelection().removeAllRanges();
-    document.getElementById('cell'+ row + col).focus()
+    var input = document.getElementById('editcell'+ row +''+ col);
+    input.focus();
+    input.onblur = function(){
+        Table.prototype.doneEditing.call(self);
+    }
+
 }
 
-Candidats.prototype.doneEditing = function(){
-    console.log('done edit');
-    var cell = this.model.get('edit');
+Table.prototype.doneEditing = function(){
+    console.log('done editing');
+    var cell = this.model.get('edit'); console.log(cell);
     this.model.set('table.' + cell.row + '.' + cell.col, cell.text);
     this.model.del('edit');
 }
 
-Candidats.prototype.cancelEditing = function(e){
+Table.prototype.cancelEditing = function(e){
     // 27 = ESQ-key
     if (e.keyCode == 27) {
         this.model.del('edit');
     }
 }
 
-module.exports = Candidats;
+module.exports = Table;
