@@ -37,8 +37,17 @@
 <view:>
     <div class="container">
         {{with _page.selected}}
+        <blockquote>
         <h1>{{this.name}}</h1>
-        <span>{{this.description}}</span>
+            </blockquote>
+        <p>{{this.description}}</p>
+        <dl class="dl-horizontal">
+            <dt>Создано:</dt>
+            <dd>{{formatDate(this.timeCreated)}}</dd>
+            <dt>Менеджер:</dt>
+            <dd>{{this.owner}}</dd>
+        </dl>
+        <candidats table = {{_page.selected.candidats}}></candidats>
         {{/}}
     </div>
 
@@ -60,23 +69,52 @@
     <candidats: element="candidats">
         <h4>Кандидаты</h4>
         <p>
-            <button type="button" class="btn btn-success" on-click="addCandidat(#r)">Новый кандидат</button>
             {{if table}}
-                <table class="table-bordered">
-                    {{each table as #row}}
+                <table class="table table-bordered">
+                    {{each table as #row, #r}}
                         <tr>
+                            {{each #row as #cell, #c}}
+                                {{if #r===0}}
+                                    <th>
+                                        {{if #c===0}}
+                                            <button type="button" class="btn btn-success" on-click="addRow()">
+                                                <b>+</b>
+                                                кандидат
+                                            </button>
+                                        {{else}}
+                                            <span>CRITERIA {{#c}}</span>
+                                            <button type="button" class="btn btn-danger" on-click="delCol(#c)">
+                                                x
+                                            </button>
 
-                            {{each #row as #cell}}
-                                <td>
-                                    {{#cell}}@
-                                </td>
+                                        {{/}}
+                                    </th>
+                                {{else}}
+                                    {{if #c===0}}
+                                        <th>
+                                            <button type="button" class="btn btn-danger" on-click="delRow(#r)">х</button>
+                                            <span>Candidat {{#r}}</span>
+                                        </th>
+                                    {{else}}
+                                        <td on-click="editCell(#cell, #r, #c)">
+                                            <form on-submit="doneEditing(edit)">
+                                                {{if edit.row===#r}}
+                                                    {{if edit.col===#c}}
+                                                        <input id="cell{{#r}}{{c}}" class="edit" value="{{edit.text}}" x-bind="blur:doneEditing" on-keyup="cancelEditing($event)">
+                                                    {{else}}
+                                                        {{#cell}}
+                                                    {{/}}
+                                                {{else}}
+                                                    {{#cell}}
+                                                {{/}}
+                                            </form>
+                                        </td>
+                                    {{/}}
+                                {{/}}
                             {{/}}
-
-
                         </tr>
                     {{/}}
                 </table>
             {{/}}
-
-        <button type="button" class="btn btn-warning" on-click="addCriteria()">Критерий</button>
+        <button type="button" class="btn btn-warning" on-click="addCol()">Критерий</button>
         </p>
