@@ -60,29 +60,23 @@
     <candidats: element="candidats">
         <h4>Кандидаты</h4>
         <p>
+            <button type="button" class="btn btn-success" on-click="addCandidat(#r)">Новый кандидат</button>
+            {{if table}}
+                <table class="table-bordered">
+                    {{each table}}
+                        <tr>
 
-            {{if @table}}
+                            {{each this}}
+                                <td>
+                                    @
+                                </td>
+                            {{/}}
 
-        <table class="table-bordered">
-            {{each @table as #line, #r}}
-            <tr>
-                {{each #line as #cell, #c}}
-                    {{if #r==0}}
-                        {{if #c==0}}
-                            <th><button type="button" class="btn btn-success" on-click="addCandidat(#r)">Новый кандидат</button></th>
-                        {{else}}
-                            <th>header<button type="button" class="btn btn-danger btn-sm" on-click="delCriteria(#c)">х</button></th>
-                        {{/}}
-                    {{else}}
-                        {{if #c==0}}
-                            <td>ddd<input value="{{#cell}}"/></td>
-                        {{/}}
+
+                        </tr>
                     {{/}}
-                {{/}}
-            </tr>
+                </table>
             {{/}}
-        </table>
-        {{/}}
 
         <button type="button" class="btn btn-warning" on-click="addCriteria()">Критерий</button>
         </p>

@@ -11,7 +11,7 @@ app.loadViews (__dirname + '/../../views');
 app.loadStyles(__dirname + '/../../styles');
 
 app.get('*', userExists);
-app.get('*', queryProcessor);
+
 
 app.get('/', function (page, model){
     page.redirect('votings');
@@ -65,14 +65,7 @@ function userExists(page, model, params, next){
     } else page.render('login');
 }
 
-function queryProcessor(page, model, params, next){
-        var userId = model.get('_session.userId');
-       /* if(params.query.votingid){
-            // TODO: add access differentiation
-            model.ref('_page.selectedVoting','votings.' + params.query.votingid);
-        }*/
-        next();
-}
+
 app.proto.addVoting = function(newVoting){
     console.log('addVoting '); console.log(newVoting);
     if (!newVoting) return;

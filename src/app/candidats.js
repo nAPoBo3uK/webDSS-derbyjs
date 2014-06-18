@@ -7,16 +7,17 @@ var Candidats = function(){
 
 Candidats.prototype.addCandidat = function(){
     console.log('newRow');
-    var candidats = this.model.at('_page.newVoting.candidats');
-    var arr = candidats.get();
-    if(arr && arr.length){
-        var emptyLine = []
-        for(var i=0; i< arr[0].length; i++)
-            emptyLine.push(['']);
-        candidats.push(emptyLine);
+    var table = this.model.at('table');
+    var matrix = table.get();
+    if(matrix && matrix.length) {
+        for (var i = 0; i < matrix[0].length; i++)
+            table.at((+table.push() - 1).toString()).push('');
     } else {
-        candidats.push(['']);
+        table.push('');
+        table.at('0').push('');
     }
+
+
 }
 
 Candidats.prototype.addCriteria = function(){
@@ -25,14 +26,29 @@ Candidats.prototype.addCriteria = function(){
     var matrix = table.get();
     if(matrix && matrix.length){
         for(var i=0; i< matrix.length; i++)
-            this.model.at('table.'+i).push('');
+            table.at(i).push('');
     }
+}
+
+Candidats.prototype.delCandidat = function(row){
+    console.log('del candidat ' + row);
+    var table = this.model.at('table');
+    console.log(table.get());
+    table.set(table.get().filter(function(item, index){index!=row}));
+
+}
+Candidats.prototype.delCrireria = function(col){
+    console.log('del candidat ' + row);
+    var table = this.model.at('table');
+    var matrix = table.get();
+    for(var i= 0; i<matrix.length;i++)
+        table.del(i + '.' + col);
+
 }
 
 Candidats.prototype.init = function(){
     console.log('candidats component init');
-    this.model.at('table').push(['']);
-    console.log(this.model.get());
+      console.log(this.model.get());
 }
 
 module.exports = Candidats;
