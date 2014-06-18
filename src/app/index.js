@@ -14,29 +14,37 @@ app.loadStyles(__dirname + '/../../styles');
 app.component('votings:candidats', tableEditable);
 
 app.get('*', userExists);
-
+app.get('*', function(page,model,params, next){
+    model.at('_state.votings').set('mode',params.query.action);
+    next();
+})
 
 app.get('/', function (page, model){
     page.redirect('votings');
 });
-/*
-app.get('/votings/:action', function (page, model, params, next){
-    console.log(params);
 
-    model.set('_page.selected','sdsdsdsd');
-
-    //console.log(model.get());
-    page.redirect('votings');
-
-});*/
 
 app.get('/votings', function (page, model, params, next){
-    console.log(params)
-    var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
-        userVotings.ref('_page.votingsList');
 
+    var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
+        userVotings.ref('_page.list');
+        if(params.query.action){
+            switch(params.query.action){
+                case 'new':
+                    if(!model.get('_state.votings.new')){
+                        model.set('_state.votings.new',{});
+                    }
+                    break;
+                case 'view':
+                    if(!model.get('_state.votings.selected')){
+                        if(params.query.id)
+                            model.ref('_state.votings.selected','_page.list.' + params.query.id);
+                    }
+                    break;
+            }
+
+        }
         page.render('votings');
-      //  next();
    });
 
 });
@@ -107,16 +115,10 @@ app.proto.delVoting = function(votingId){
 
 }
 
-app.proto.setMode = function(mode){
-    this.model.set('_page.mode', mode);
-}
 app.proto.view = function(id){
     console.log('view');
     var entity = this.model.get('$render.ns');
-    this.setMode('view');
-    this.model.ref('_page.selected', '_page.' + entity + 'List.' + id);
-
-
+    this.model.ref('_state.'+entity+'.selected', '_state.' + entity + '.list.' + id);
 }
 
 app.proto.formatDate = function(date){

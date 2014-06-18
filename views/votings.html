@@ -1,4 +1,22 @@
 <import: src="./candidats">
+<view:>
+    <div class="container">
+        {{with _state.votings.selected}}
+        <blockquote>
+            <h1>{{this.name}}</h1>
+        </blockquote>
+
+        <dl class="dl-horizontal">
+            <dt>Создано:</dt>
+            <dd>{{formatDate(this.timeCreated)}}</dd>
+            <dt>Менеджер:</dt>
+            <dd>{{this.owner}}</dd>
+        </dl>
+        <p>{{this.description}}</p>
+        <hr>
+        {{/}}
+        <candidats table = {{_state.votings.selected.candidats}}></candidats>
+    </div>
 <list:>
     {{@content}}
     <div class="scrollable">
@@ -11,11 +29,11 @@
                     <th></th>
                 </tr>
             </thead>
-            {{if _page.votingsList}}
-                <list-row-group name="Все" data="{{_page.votingsList}}"></list-row-group>
+
+                <list-row-group name="Все" data="{{_page.list}}"></list-row-group>
                <!-- <list-row-group name="Эксперт" data="{{_page.votings.expert}}"></list-row-group>
                 <list-row-group name="Наблюдатель" data="{{_page.votings.observer}}"></list-row-group> -->
-             {{/}}
+
         </table>
     </div>
 
@@ -34,36 +52,17 @@
         <mode-controls></mode-controls>
     </form>
 
-<view:>
-    <div class="container">
-        {{with _page.selected}}
-        <blockquote>
-        <h1>{{this.name}}</h1>
-            </blockquote>
-        <p>{{this.description}}</p>
-        <dl class="dl-horizontal">
-            <dt>Создано:</dt>
-            <dd>{{formatDate(this.timeCreated)}}</dd>
-            <dt>Менеджер:</dt>
-            <dd>{{this.owner}}</dd>
-        </dl>
-        <candidats table = {{_page.selected.candidats}}></candidats>
-        {{/}}
-    </div>
-
-
-
 <list-row: element="list-row">
-    <tr on-click="view(@index)">
-        <td>{{@data.name}}</td>
-        <td>{{formatDate(@data.timeCreated)}}</td>
-        <td>{{@data.status}}</td>
-        <td>
-            <button type="button" class="btn btn-default btn-xs" on-click="delVoting(@data.id)">
-                <b>X</b>
-            </button>
-        </td>
-    </tr>
+
+    <td>{{@data.name}}</td>
+    <td>{{formatDate(@data.timeCreated)}}</td>
+    <td>{{@data.status}}</td>
+    <td>
+        <button type="button" class="btn btn-default btn-xs" on-click="delVoting(@data.id)">
+            <b>X</b>
+        </button>
+    </td>
+
 
 
 
