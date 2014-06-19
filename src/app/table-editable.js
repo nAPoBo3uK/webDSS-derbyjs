@@ -69,7 +69,7 @@ Table.prototype.init = function(){
 Table.prototype.editCell = function(cell, row, col){
     var self = this;
     this.model.set('edit', {
-        row: row,
+        row: row?row:0,
         col: col,
         text: cell
     });

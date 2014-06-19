@@ -6,6 +6,9 @@ global.app = app;
 global.derby = derby;
 
 
+
+
+
 app.use(require('d-bootstrap'));
 
 app.loadViews (__dirname + '/../../views');
@@ -15,7 +18,12 @@ app.component('votings:candidats', tableEditable);
 
 app.get('*', userExists);
 app.get('*', function(page,model,params, next){
-    model.at('_state.votings').set('mode',params.query.action);
+    if(params.query.action){
+        model.at('_state.votings').set('mode', params.query.action);
+    } else {
+        model.del('_state.' + model.get('$render.ns' + '.selected'));
+    }
+
     next();
 })
 
@@ -25,7 +33,10 @@ app.get('/', function (page, model){
 
 
 app.get('/votings', function (page, model, params, next){
-
+  /*  model.on('all', '**', function (path, event) {
+        console.log('model.event');
+        console.log(arguments);
+    });*/
     var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
         userVotings.ref('_page.list');
         if(params.query.action){
@@ -46,6 +57,7 @@ app.get('/votings', function (page, model, params, next){
         }
         page.render('votings');
    });
+
 
 });
 
@@ -86,17 +98,24 @@ function userExists(page, model, params, next){
     } else page.render('login');
 }
 
-
-app.proto.addVoting = function(newVoting){
-    console.log('addVoting '); console.log(newVoting);
-    if (!newVoting) return;
+app.proto.addNew = function(namespace){
+    console.log('addNew ' + namespace);
     var model = this.model;
-    var userId = model.get('_session.userId');
-    var now = new Date();
-    newVoting.timeCreated = now.getTime();
-    newVoting.owner = [userId];
-    model.add('votings', newVoting);
-    this.model.set('_page.newVoting', '');
+    var newRecord = model.get('_state.'+ namespace +'.new');
+    console.log(newRecord);
+    if (!newRecord) return;
+    newRecord.owner = [model.get('_session.userId')];
+    switch(namespace){
+        case 'votings':
+            newRecord.timeCreated = (new Date()).getTime();
+            break;
+        case 'users':
+            break;
+    }
+
+    model.add(namespace, newRecord);
+    this.model.del('_state.'+ namespace +'.new');
+    this.model.del('_state.'+ namespace +'.new');
 };
 
 app.proto.isSelectedEditable = function(){
@@ -114,6 +133,8 @@ app.on('model', function(model) {
 app.proto.delVoting = function(votingId){
     console.log('delVoting'); console.log(votingId);
    this.model.del('votings.' + votingId);
+    if(this.model.get('_state.votings.selected.id') === votingId)
+        this.model.del('_state.votings.selected');
 
 }
 

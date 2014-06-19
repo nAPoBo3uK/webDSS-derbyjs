@@ -33,7 +33,7 @@
         </div>
         <div class="col-xs-6">
              {{if _state[$render.ns].mode}}
-                <view name="{{$render.ns}}:{{_state[$render.ns].mode}}"></view>
+                <view name="{{$render.ns}}:{{_state[$render.ns].mode}}" model="{{_state[$render.ns]}}"></view>
             {{/}}
         </div>
         <div class="col-xs-3">
@@ -45,8 +45,8 @@
 
 <mode-controls: element="mode-controls">
     <div class="form-group">
-        <button type="button" class="btn btn-primary btn-lg" type="submit">Сохранить</button>
-        <a  role="button" class="btn btn-lg btn-default" href="{{$render.url}}">Отмена</a>
+        <button type="button" class="btn btn-primary btn-lg" on-click="addNew($render.ns)">Сохранить</button>
+        <a role="button" class="btn btn-lg btn-default" on-click="freeNew($render.ns)">Отмена</a>
     </div>
 
     <list-row-group: element="list-row-group">

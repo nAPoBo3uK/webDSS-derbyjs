@@ -28,7 +28,7 @@
                     </button>
                 </th>
                 {{else}}
-                <th on-click="editCell(#cell, 0, #c)">
+                <th on-click="editCell(#cell, #r, #c)">
                     <editable-cell>
                         <span>
                             {{if #cell}}
@@ -105,8 +105,10 @@
     </table>
 <editable-cell: element="editable-cell">
     <form on-submit="doneEditing()">
-        {{if edit.row===#r && edit.col===#c}}
-        <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+        {{if edit.col===#c && edit.row===#r}}
+            <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+        {{else if !#r && edit.col===#c}}
+           <input id="editcell0{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
         {{else}}
         {{@content}}
         {{/}}
