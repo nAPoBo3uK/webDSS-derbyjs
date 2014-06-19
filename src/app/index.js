@@ -97,14 +97,22 @@ function userExists(page, model, params, next){
         page.render('registration');
     } else page.render('login');
 }
-
+app.proto.startVoting = function(id){
+    console.log('startVoting '+id);
+    //TODO:
+}
+app.proto.isOwner = function(entity){
+    console.log('isOwner?');
+    if(entity)
+        return this.model.get('_session.userId') === entity.owner;
+}
 app.proto.addNew = function(namespace){
     console.log('addNew ' + namespace);
     var model = this.model;
     var newRecord = model.get('_state.'+ namespace +'.new');
     console.log(newRecord);
     if (!newRecord) return;
-    newRecord.owner = [model.get('_session.userId')];
+    newRecord.owner = model.get('_session.userId');
     switch(namespace){
         case 'votings':
             newRecord.timeCreated = (new Date()).getTime();
@@ -119,7 +127,12 @@ app.proto.addNew = function(namespace){
 };
 
 app.proto.isSelectedEditable = function(){
+    // TODO:
     return true;
+}
+app.proto.addUser2participants = function(userId){
+    console.log('addUser2participants ' +userId);
+    this.model.set('_state.votings.selected.participants.'+ userId,{});
 }
 app.on('model', function(model) {
     model.fn('getKeys', function(obj) {
@@ -127,7 +140,6 @@ app.on('model', function(model) {
     });
 
 });
-
 
 // votinglist
 app.proto.delVoting = function(votingId){

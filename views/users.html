@@ -7,7 +7,7 @@
                 <th>Имя</th>
                 <th>Специализация</th>
                 <th></th>
-                <th></th>
+
             </tr>
             </thead>
             {{if _page.usersList}}
@@ -57,17 +57,16 @@
                 <td>{{this.specialism}}</td>
                 {{/}}
                 <td>
-                    {{if @data.createdBy === _page.user.id}}
+                    {{if @data.owner === _page.user.id}}
                     <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
-                        <b>X</b>
+                        <span class="glyphicon glyphicon-remove"/>
                     </button>
                     {{/}}
-                </td>
-
-                <td>
-                    <button type="button" class="btn btn-default btn-xs" on-click="addUser2participants(@data.id)">
-                        <b>-></b>
-                    </button>
+                    {{if _state.votings.selected && !_state.votings.selected.participants[@data.id]}}
+                        <button type="button" class="btn btn-default btn-xs" on-click="addUser2participants(@data.id)">
+                            <span class="glyphicon glyphicon-chevron-right"/>
+                        </button>
+                    {{/}}
                 </td>
             </tr>
 

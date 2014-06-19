@@ -2,7 +2,12 @@
 <view:>
     {{with @model.selected}}
         <blockquote>
-            <h1>{{this.name}}</h1>
+            <h2>{{this.name}}</h2>
+            {{if @model.selected.participants.voters && isOwner(@model.selected)}}
+                <button class="btn btn-info btn-lg" on-click="startVoting(@model.selected.id)">
+                    <span class="glyphicon glyphicon-play"/>Старт!
+                </button>
+            {{/}}
         </blockquote>
 
         <dl class="dl-horizontal">

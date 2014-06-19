@@ -28,8 +28,8 @@
                     </button>
                 </th>
                 {{else}}
-                <th on-click="editCell(#cell, #r, #c)">
-                    <editable-cell>
+                <th on-click="editCell(#cell, 0, #c)">
+                    <editable-cell r="{{0}}" c="{{#c}}">
                         <span>
                             {{if #cell}}
                                 {{#cell}}
@@ -37,7 +37,7 @@
                                 Критерий {{#c}}
                             {{/}}
                         </span>
-                        <button type="button" class="btn btn-danger" on-click="delCol(#c)">
+                        <button type="button" class="btn btn-xs" on-click="delCol(#c)">
                             <span class="glyphicon glyphicon-remove"/>
                         </button>
                     </editable-cell>
@@ -53,8 +53,8 @@
                 {{each #row as #cell, #c}}
                     {{if #c===0}}
                     <th on-click="editCell(#cell, #r, #c)">
-                        <editable-cell>
-                            <button type="button" class="btn btn-danger" on-click="delRow(#r)">
+                        <editable-cell r="{{#r}}" c="{{#c}}">
+                            <button type="button" class="btn btn-sm" on-click="delRow(#r)">
                                 <span class="glyphicon glyphicon-remove"/>
                             </button>
                                 <span>
@@ -68,7 +68,7 @@
                     </th>
                     {{else}}
                     <td on-click="editCell(#cell, #r, #c)">
-                        <editable-cell>{{#cell}}</editable-cell>
+                        <editable-cell r="{{#r}}" c="{{#c}}">{{#cell}}</editable-cell>
                     </td>
                     {{/}}
                 {{/}}
@@ -105,10 +105,8 @@
     </table>
 <editable-cell: element="editable-cell">
     <form on-submit="doneEditing()">
-        {{if edit.col===#c && edit.row===#r}}
-            <input id="editcell{{#r}}{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
-        {{else if !#r && edit.col===#c}}
-           <input id="editcell0{{#c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+        {{if edit.col===@c && edit.row===@r}}
+            <input id="editcell{{@r}}{{@c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
         {{else}}
         {{@content}}
         {{/}}
