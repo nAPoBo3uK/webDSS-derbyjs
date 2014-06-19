@@ -1,11 +1,11 @@
 <index: element="candidats">
     <h4>
+        Кандидаты
         {{if @editable}}
         <button type="button" class="btn btn-default" on-click="setEditMode()">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         {{/}}
-        Кандидаты
     </h4>
     <p>
         {{if table}}
@@ -18,64 +18,69 @@
     </p>
 <editable-table: element="editable-table">
     <table class="table table-bordered">
-
-        {{each table as #row, #r}}
+        <thead>
         <tr>
-            {{each #row as #cell, #c}}
-            {{if #r===0}}
-            {{if #c===0}}
-            <th>
-                <button type="button" class="btn btn-warning" on-click="addCol()">
-                    <span class="glyphicon glyphicon-plus"></span>
-                    Критерий
-                </button>
-            </th>
-            {{else}}
-            <th on-click="editCell(#cell, #r, #c)">
-                <editable-cell>
-                    <span>
-                        {{if #cell}}
-                            {{#cell}}
-                        {{else}}
-                            Критерий {{#c}}
-                        {{/}}
-                    </span>
-                    <button type="button" class="btn btn-danger" on-click="delCol(#c)">x</button>
-                </editable-cell>
-            </th>
-            {{/}}
-
-            {{else}}
-            {{if #c===0}}
-            <th on-click="editCell(#cell, #r, #c)">
-                <editable-cell>
-                    <button type="button" class="btn btn-danger" on-click="delRow(#r)">х</button>
+            {{each table[0] as #cell, #c}}
+                {{if #c===0}}
+                <th>
+                    <button type="button" class="btn btn-warning" on-click="addCol()">
+                        <span class="glyphicon glyphicon-plus"/> Критерий
+                    </button>
+                </th>
+                {{else}}
+                <th on-click="editCell(#cell, 0, #c)">
+                    <editable-cell>
                         <span>
                             {{if #cell}}
                                 {{#cell}}
                             {{else}}
-                                Кандидат {{#r}}
+                                Критерий {{#c}}
                             {{/}}
                         </span>
-                </editable-cell>
-            </th>
-            {{else}}
-            <td on-click="editCell(#cell, #r, #c)">
-                <editable-cell>{{#cell}}</editable-cell>
-            </td>
-
-            {{/}}
-            {{/}}
+                        <button type="button" class="btn btn-danger" on-click="delCol(#c)">
+                            <span class="glyphicon glyphicon-remove"/>
+                        </button>
+                    </editable-cell>
+                </th>
+                {{/}}
             {{/}}
         </tr>
+        </thead>
+        <tbody>
+        {{each table as #row, #r}}
+            {{if #r!=0}}
+            <tr>
+                {{each #row as #cell, #c}}
+                    {{if #c===0}}
+                    <th on-click="editCell(#cell, #r, #c)">
+                        <editable-cell>
+                            <button type="button" class="btn btn-danger" on-click="delRow(#r)">
+                                <span class="glyphicon glyphicon-remove"/>
+                            </button>
+                                <span>
+                                    {{if #cell}}
+                                        {{#cell}}
+                                    {{else}}
+                                        Кандидат {{#r}}
+                                    {{/}}
+                                </span>
+                        </editable-cell>
+                    </th>
+                    {{else}}
+                    <td on-click="editCell(#cell, #r, #c)">
+                        <editable-cell>{{#cell}}</editable-cell>
+                    </td>
+                    {{/}}
+                {{/}}
+
+            </tr>
+            {{/}}
         {{/}}
+        </tbody>
     </table>
-
     <button type="button" class="btn btn-success" on-click="addRow()">
-        <span class="glyphicon glyphicon-plus"></span>
-        Кандидат
+        <span class="glyphicon glyphicon-plus"></span> Кандидат
     </button>
-
 
 <view-table: element="view-table">
     <table class="table table-bordered">

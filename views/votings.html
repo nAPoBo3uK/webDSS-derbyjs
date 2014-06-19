@@ -1,23 +1,20 @@
 <import: src="./candidats">
 <view:>
-    <div class="container">
-        {{with _state.votings.selected}}
-        <blockquote>
-            <h1>{{this.name}}</h1>
-        </blockquote>
+    {{with _state.votings.selected}}
+    <blockquote>
+        <h1>{{this.name}}</h1>
+    </blockquote>
 
-        <dl class="dl-horizontal">
-            <dt>Создано:</dt>
-            <dd>{{formatDate(this.timeCreated)}}</dd>
-            <dt>Менеджер:</dt>
-            <dd>{{this.owner}}</dd>
-        </dl>
-        <p>{{this.description}}</p>
-        <hr>
-        {{/}}
-
-        <candidats table = {{_state.votings.selected.candidats}} editable = "false"></candidats>
-    </div>
+    <dl class="dl-horizontal">
+        <dt>Создано:</dt>
+        <dd>{{formatDate(this.timeCreated)}}</dd>
+        <dt>Менеджер:</dt>
+        <dd>{{this.owner}}</dd>
+    </dl>
+    <p>{{this.description}}</p>
+    <hr>
+    {{/}}
+    <candidats table = {{_state.votings.selected.candidats}} editable = "false"></candidats>
 <list:>
     {{@content}}
     <div class="scrollable">

@@ -1,5 +1,13 @@
 <index: element="participants">
-    <h4>Участники</h4>
+    {{if _state.votings.selected && $render.ns!='votings'}}
+        <b>{{_state.votings.selected.name}}.</b>
+        <span>{{_state.votings.selected.description}}</span>
+    {{/}}
+    <h4>Участники {{if $render.ns==='votings'}}<a class="btn btn-success" href="/users">
+        <span class="glyphicon glyphicon-plus-sign"/>Добавить
+    </a>
+    {{/}}
+    </h4>
 
     <div class="scrollable">
         <table class="table table-hover">

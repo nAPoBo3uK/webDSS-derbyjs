@@ -99,7 +99,9 @@ app.proto.addVoting = function(newVoting){
     this.model.set('_page.newVoting', '');
 };
 
-
+app.proto.isSelectedEditable = function(){
+    return true;
+}
 app.on('model', function(model) {
     model.fn('getKeys', function(obj) {
         if(obj) return Object.keys(obj);
