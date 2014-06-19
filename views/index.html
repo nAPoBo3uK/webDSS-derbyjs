@@ -59,7 +59,7 @@
         <thead><tr><th>{{@name}}</th></tr></thead>
         <tbody>
         {{each @data as #row, #index}}
-            <tr on-click="redirect($render.ns+'?action=view&id='+@index)">
+            <tr on-click="redirect($render.ns+'?action=view&id='+#index)">
 
                 <view name = "{{$render.ns}}:list-row" data="{{#row}}" index="{{#index}}"></view>
 

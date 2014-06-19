@@ -18,13 +18,17 @@
     </p>
 <editable-table: element="editable-table">
     <table class="table table-bordered">
+
         {{each table as #row, #r}}
         <tr>
             {{each #row as #cell, #c}}
             {{if #r===0}}
             {{if #c===0}}
             <th>
-                <button type="button" class="btn btn-warning" on-click="addCol()">Критерий</button>
+                <button type="button" class="btn btn-warning" on-click="addCol()">
+                    <span class="glyphicon glyphicon-plus"></span>
+                    Критерий
+                </button>
             </th>
             {{else}}
             <th on-click="editCell(#cell, #r, #c)">
@@ -68,30 +72,31 @@
     </table>
 
     <button type="button" class="btn btn-success" on-click="addRow()">
-        <b>+</b>
-        кандидат
+        <span class="glyphicon glyphicon-plus"></span>
+        Кандидат
     </button>
 
 
 <view-table: element="view-table">
     <table class="table table-bordered">
-        {{each table as #row, #r}}
-            {{if #r===0}}
-                <thead>
+        <thead>
+            <tr>
+                {{each table[0] as #cell, #c}}
+                    <th><span>{{#cell}}</span></th>
+                {{/}}
+            </tr>
+        </thead>
+        <tbody>
+            {{each table as #row, #r}}
+                {{if #r!=0}}
                     <tr>
                         {{each #row as #cell, #c}}
-                            <th><span>{{#cell}}</span></th>
+                            <td><span>{{#cell}}</span></td>
                         {{/}}
                     </tr>
-                </thead>
-            {{else}}
-                <tr>
-                    {{each #row as #cell, #c}}
-                        <td><span>{{#cell}}</span></td>
-                    {{/}}
-                </tr>
+                {{/}}
             {{/}}
-        {{/}}
+        </tbody>
     </table>
 <editable-cell: element="editable-cell">
     <form on-submit="doneEditing()">
