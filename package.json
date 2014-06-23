@@ -2,7 +2,7 @@
   "name": "webDSS",
   "version": "0.1.0",
   "description": "webDSS-derbyjs ==============",
-  "main": "server.js",
+  "main": "app.js",
   "dependencies": {
     "derby": "0.6.0-alpha7",
     "express": "~4.1.1",

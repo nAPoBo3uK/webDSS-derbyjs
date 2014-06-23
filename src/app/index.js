@@ -61,6 +61,7 @@ app.get('/votings', function (page, model, params, next){
 
 });
 
+app.get('/votings/:id', function(page, model,params){})
 app.get('/users', function (page, model, params){
 
     var usersQuery = model.query('auths', {});
@@ -138,7 +139,9 @@ app.on('model', function(model) {
     model.fn('getKeys', function(obj) {
         if(obj) return Object.keys(obj);
     });
-
+    model.fn('all', function(obj) {
+        return obj;
+    });
 });
 
 // votinglist
