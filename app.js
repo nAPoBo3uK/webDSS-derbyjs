@@ -8,7 +8,7 @@ var options = {
 var derby = require('derby');
 
 function createServer() {
-    var port = options.port || process.env.PORT || 3000;
+    var port = options.port || process.env.PORT || process.env.OPENSHIFT_APP_PORT || 3000;
     var app = require(__dirname + '/src/app');
     var expressApp = require(__dirname + '/src/server/server.js').setup(app, options);
     var server = require('http').createServer(expressApp);
