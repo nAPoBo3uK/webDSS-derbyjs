@@ -14,7 +14,7 @@ derby.use(require('racer-bundle'));
 
 
 exports.setup = function (app, options) {
-    var mongoUrl = process.env.MONGO_URL || process.env.MONGOHQ_URL || 'mongodb://admin:GIkJN1ik6nvg@nodejs-webdss.rhcloud.com:27017/nodejs';
+    var mongoUrl = /*process.env.MONGO_URL || process.env.MONGOHQ_URL ||*/ 'mongodb://test:testpass@ds061208.mongolab.com:61208/testwebdss';
     var store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})});
 
     var expressApp = express();
