@@ -13,20 +13,8 @@ var liveDbMongo = require('livedb-mongo');
 derby.use(require('racer-bundle'));
 
 
-exports.setup = function (app, options) {
-    var mongoUrl;
+exports.setup = function (app, mongoUrl) {
 
-    if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-        mongoUrl = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-            process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-            process.env.OPENSHIFT_APP_NAME;
-    } else {
-        mongoUrl = process.env.MONGO_URL
-            || process.env.MONGOHQ_URL
-            || 'mongodb://localhost:27017/web-dss';
-    }
 
     var store = derby.createStore({db: liveDbMongo(mongoUrl + '?auto_reconnect', {safe: true})});
 
