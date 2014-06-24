@@ -51,23 +51,22 @@
 
 
         <list-row:>
-            <tr on-click="view(@index)">
-                {{with @data.local}}
-                <td>{{this.username}}<br><small>{{this.email}}</small></td>
-                <td>{{this.specialism}}</td>
+            {{with @data.local}}
+            <td>{{this.username}}<br><small>{{this.email}}</small></td>
+            <td>{{this.specialism}}</td>
+            {{/}}
+            <td>
+                {{if @data.owner === _page.user.id}}
+                <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
+                    <span class="glyphicon glyphicon-remove"/>
+                </button>
                 {{/}}
-                <td>
-                    {{if @data.owner === _page.user.id}}
-                    <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
-                        <span class="glyphicon glyphicon-remove"/>
+                {{if _state.votings.selected && !_state.votings.selected.participants[@data.id]}}
+                    <button type="button" class="btn btn-default btn-xs" on-click="addUser2participants(@data.id)">
+                        <span class="glyphicon glyphicon-chevron-right"/>
                     </button>
-                    {{/}}
-                    {{if _state.votings.selected && !_state.votings.selected.participants[@data.id]}}
-                        <button type="button" class="btn btn-default btn-xs" on-click="addUser2participants(@data.id)">
-                            <span class="glyphicon glyphicon-chevron-right"/>
-                        </button>
-                    {{/}}
-                </td>
-            </tr>
+                {{/}}
+            </td>
+
 
 
