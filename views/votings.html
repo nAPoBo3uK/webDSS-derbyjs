@@ -1,4 +1,5 @@
-<import: src="./candidats">
+<import: src="./list">
+<import: src="./table">
 <view:>
     {{with @model.selected}}
         <blockquote>
@@ -20,25 +21,6 @@
         <hr>
     {{/}}
     <candidats table = {{@model.selected.candidats}} editable></candidats>
-<list:>
-    {{@content}}
-    <div class="scrollable">
-        <table class="table table-hover">
-            <thead>
-                <tr>
-                    <th>Название</th>
-                    <th>Создан</th>
-                    <th>Статус</th>
-                    <th></th>
-                </tr>
-            </thead>
-
-                <list-row-group name="Все" data="{{_page.list}}"></list-row-group>
-               <!-- <list-row-group name="Эксперт" data="{{_page.votings.expert}}"></list-row-group>
-                <list-row-group name="Наблюдатель" data="{{_page.votings.observer}}"></list-row-group> -->
-
-        </table>
-    </div>
 
 <new:>
     <form role="form">
@@ -56,16 +38,18 @@
         <mode-controls></mode-controls>
     </form>
 
-<list-row: element="list-row">
-    <td>{{@data.name}}</td>
-    <td>{{formatDate(@data.timeCreated)}}</td>
-    <td>{{@data.status}}</td>
-    <td>
-        <button type="button" class="btn btn-default" on-click="delVoting(@data.id)">
-            <span class="glyphicon glyphicon-remove"/>
+
+<candidats:>
+    <h4>
+        Кандидаты
+        {{if @editable}}
+        <button type="button" class="btn btn-default" on-click="setEditMode()">
+            <span class="glyphicon glyphicon-pencil"></span>
         </button>
-    </td>
-
-
+        {{/}}
+    </h4>
+    <p>
+        <view name="table:{{getMode()}}"></view>
+    </p>
 
 

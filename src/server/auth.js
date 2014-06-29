@@ -17,8 +17,8 @@ var options = {
      },
     smtp: {
         service: 'Gmail',
-        user: 'zag2art@gmail.com',
-        pass: 'blahblahblah'
+        user: 'bdenmail@gmail.com',
+        pass: 'dd'
     }
 }
 

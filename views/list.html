@@ -1,0 +1,66 @@
+<index: attributes="row head" element="list">
+<form class="form-inline">
+    <div class="form-group">
+        <input type="text" class="form-control" placeholder="Найти">
+    </div>
+    <a class="btn btn-success" href="{{$render.ns}}?action=new">Добавить</a>
+</form>
+<div class="scrollable">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                {{if @pattern}}
+                    <view name="{{@pattern}}-head"/>
+                {{else}}
+                    <row-default data = "{{#row}}"/>
+                {{/}}
+            </tr>
+        </thead>
+        <tbody>
+            {{each data as #row, #index}}
+            <tr on-click="select(#index)">
+                {{if @pattern}}
+                    <view name="{{@pattern}}-row" data = "{{#row}}"/>
+                {{else}}
+                    <default-row data = "{{#row}}"/>
+                {{/}}
+
+                {{if #row.owner === owner}}
+                <td>
+                    <button type="button" class="btn btn-default" on-click="delete(#index)">
+                        <span class="glyphicon glyphicon-remove"/>
+                    </button>
+                </td>
+                {{/}}
+
+            </tr>
+            {{/each}}
+        </tbody>
+    </table>
+</div>
+
+<!-- default list pattern -->
+<default-row: element="default-row">
+    <td>{{@data.name}}</td>
+<default-head: element="default-head">
+    <th>Название</th>
+
+<!-- users list pattern -->
+<users-head:>
+    <th>Имя</th>
+    <th>Специализация</th>
+<users-row:>
+    <td>
+        {{@data.local.username}}<br>
+        <small>{{@data.local.email}}</small>
+    </td>
+    <td>{{@data.local.specialism}}</td>
+
+<!-- votings list pattern -->
+<votings-head:>
+    <th>Название</th>
+    <th>Создан</th>
+<votings-row:>
+    <td>{{@data.name}}</td>
+    <td>{{formatDate(@data.timeCreated)}}</td>
+    <td>{{@data.status}}</td>

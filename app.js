@@ -7,21 +7,15 @@ var server = require(__dirname + '/src/server/server.js');
 var http = require('http');
 
 function createServer() {
-    var server_port = process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 3000;
+    var server_port = process.env.PORT || 3000;
     var server_ip = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 
     var mongoUrl;
-    if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD){
-        mongoUrl = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-            process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-            process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-            process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-            process.env.OPENSHIFT_APP_NAME;
-    } else {
-        mongoUrl = process.env.MONGO_URL
-            || process.env.MONGOHQ_URL
-            || 'mongodb://localhost:27017/web-dss';
-    }
+
+    mongoUrl = process.env.MONGO_URL
+        || process.env.MONGOHQ_URL
+        || 'mongodb://localhost:27017/web-dss';
+
 
     http.createServer(server.setup(app, mongoUrl))
         .listen(server_port, function (e) {

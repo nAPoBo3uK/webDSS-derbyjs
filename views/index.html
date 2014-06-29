@@ -5,7 +5,8 @@
 <import: src="./navigation">
 <import: src="./account">
 <import: src="./participants">
-<import: src="./access-error">
+<import: src="./table">
+<import: src="./list">
 
 <Title:>
     webDSS
@@ -22,14 +23,12 @@
     <view name="navigation"></view>
     <div class="container-fluid">
         <div class="col-xs-3">
-            <view name="{{$render.ns}}:list">
-                <form class="form-inline">
-                    <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Найти">
-                    </div>
-                    <a class="btn btn-success" href="{{$render.ns}}?action=new">Добавить</a>
-                </form>
-            </view>
+            <list data="{{_page.list}}"
+                  owner="{{_session.userId}}"
+                  pattern="{{$render.ns}}"
+                  on-view="view()"
+                  on-delete="delListItem()"
+                  on-set-participant="participants.add()"/>
         </div>
         <div class="col-xs-6">
              {{if _state[$render.ns].mode}}
@@ -49,16 +48,4 @@
         <a role="button" class="btn btn-lg btn-default" on-click="freeNew($render.ns)">Отмена</a>
     </div>
 
-    <list-row-group: element="list-row-group">
-
-        <thead><tr><th>{{@name}}</th></tr></thead>
-        <tbody>
-        {{each @data as #row, #index}}
-            <tr on-click="redirect($render.ns+'?action=view&id='+#index)">
-
-                <view name = "{{$render.ns}}:list-row" data="{{#row}}" index="{{#index}}"></view>
-
-            </tr>
-        {{/each}}
-        </tbody>
 

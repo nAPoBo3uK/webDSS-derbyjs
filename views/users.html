@@ -1,72 +1,35 @@
-<list:>
-    {{@content}}
-    <div class="scrollable">
-        <table class="table table-hover">
-            <thead>
-            <tr>
-                <th>Имя</th>
-                <th>Специализация</th>
-                <th></th>
+<new:>
+    <form role="form" class="form-horizontal" on-submit="addUser(_page.voting)">
+        <h3>Новый пользователь</h3>
+        <div class="form-group col-xs-5">
+            <input name="username" type="text" class="form-control" placeholder="Имя" value="{{_page.user.username}}" required autofocus>
+        </div>
+        <div class="form-group col-xs-5">
+            <input name="email" type="email" class="form-control" placeholder="e-mail" value="{{_page.user.email}}" required>
+            <input name="skype" type="text" class="form-control" placeholder="Skype" value="{{_page.user.skype}}">
+        </div>
+        <div class="form-group col-xs-7">
+            <input name="specialism" type="text" class="form-control" placeholder="Специализация" value="{{_page.user.specialism}}">
+        </div>
+        <div class="form-group">
+            <textarea class="form-control" placeholder="Дополнительно"  rows="3">{{_page.user.description}}</textarea>
+        </div>
+        <mode-controls></mode-controls>
+    </form>
 
-            </tr>
-            </thead>
-            {{if _page.usersList}}
-            <list-row-group name="Все" data="{{_page.usersList}}"></list-row-group>
-            <!--<list-row-group name="Остальные" data="{{_page.usersList.other}}"></list-row-group>-->
-            {{/}}
-        </table>
+<view:>
+    <div class="container">
+
+    {{if _page.selected}}
+        <h2>{{_page.selected.name}}</h2>
+        {{with _page.selected.local}}
+        <h1>{{this.username}}</h1>
+        <h4>{{this.specialism}}</h4>
+        <span>{{this.description}}</span>
+        {{/}}
+    {{/}}
     </div>
 
-    <new:>
-        <form role="form" class="form-horizontal" on-submit="addUser(_page.voting)">
-            <h3>Новый пользователь</h3>
-            <div class="form-group col-xs-5">
-                <input name="username" type="text" class="form-control" placeholder="Имя" value="{{_page.user.username}}" required autofocus>
-            </div>
-            <div class="form-group col-xs-5">
-                <input name="email" type="email" class="form-control" placeholder="e-mail" value="{{_page.user.email}}" required>
-                <input name="skype" type="text" class="form-control" placeholder="Skype" value="{{_page.user.skype}}">
-            </div>
-            <div class="form-group col-xs-7">
-                <input name="specialism" type="text" class="form-control" placeholder="Специализация" value="{{_page.user.specialism}}">
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Дополнительно"  rows="3">{{_page.user.description}}</textarea>
-            </div>
-            <mode-controls></mode-controls>
-        </form>
-
-        <view:>
-            <div class="container">
-
-            {{if _page.selected}}
-                <h2>{{_page.selected.name}}</h2>
-                {{with _page.selected.local}}
-                <h1>{{this.username}}</h1>
-                <h4>{{this.specialism}}</h4>
-                <span>{{this.description}}</span>
-                {{/}}
-            {{/}}
-            </div>
-
-
-        <list-row:>
-            {{with @data.local}}
-            <td>{{this.username}}<br><small>{{this.email}}</small></td>
-            <td>{{this.specialism}}</td>
-            {{/}}
-            <td>
-                {{if @data.owner === _page.user.id}}
-                <button type="button" class="btn btn-default btn-xs" on-click="delUser(@data.id)">
-                    <span class="glyphicon glyphicon-remove"/>
-                </button>
-                {{/}}
-                {{if _state.votings.selected && !_state.votings.selected.participants[@data.id]}}
-                    <button type="button" class="btn btn-default btn-xs" on-click="addUser2participants(@data.id)">
-                        <span class="glyphicon glyphicon-chevron-right"/>
-                    </button>
-                {{/}}
-            </td>
 
 
 

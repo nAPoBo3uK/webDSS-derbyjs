@@ -1,21 +1,19 @@
 var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
-var tableEditable = require('./table-editable');
 
+
+var usersController = require('./controllers/usersController');
+var votingsController = require('./controllers/votingsController');
 global.app = app;
 global.derby = derby;
-
-
-
-
 
 app.use(require('d-bootstrap'));
 
 app.loadViews (__dirname + '/../../views');
 app.loadStyles(__dirname + '/../../styles');
 
-app.component('votings:candidats', tableEditable);
-
+app.component('table:editable', require('./presentation/table'));
+app.component('list', require('./presentation/list'));
 app.get('*', userExists);
 app.get('*', function(page,model,params, next){
     if(params.query.action){
@@ -31,57 +29,10 @@ app.get('/', function (page, model){
     page.redirect('votings');
 });
 
+app.get('/votings*', votingsController);
+app.get('/users*', usersController);
 
-app.get('/votings', function (page, model, params, next){
-  /*  model.on('all', '**', function (path, event) {
-        console.log('model.event');
-        console.log(arguments);
-    });*/
-    var userVotings = model.query('votings',{'owner':model.get('_session.userId')}).subscribe(function(){
-        userVotings.ref('_page.list');
-        if(params.query.action){
-            switch(params.query.action){
-                case 'new':
-                    if(!model.get('_state.votings.new')){
-                        model.set('_state.votings.new',{});
-                    }
-                    break;
-                case 'view':
-                    if(!model.get('_state.votings.selected')){
-                        if(params.query.id)
-                            model.ref('_state.votings.selected','_page.list.' + params.query.id);
-                    }
-                    break;
-            }
-
-        }
-        page.render('votings');
-   });
-
-
-});
-
-app.get('/votings/:id', function(page, model,params){})
-app.get('/users', function (page, model, params){
-
-    var usersQuery = model.query('auths', {});
-    usersQuery.subscribe(function(){
-        usersQuery.ref('_page.usersList');
-        switch(params.query.action){
-            case 'view':
-                model.set('_page.selectedUser', model.get('_page.usersList')[params.query.id]);
-                break;
-        }
-        page.render('users');
-    })
-
-
-});
-
-app.get('/account', function (page, model){
-    page.render('account');
-});
-
+app.get('/account', function (page, model){ page.render('account'); });
 app.get('/login', function (page){ page.redirect('/'); });
 app.get('/registration', function (page){ page.redirect('/'); });
 
@@ -98,15 +49,14 @@ function userExists(page, model, params, next){
         page.render('registration');
     } else page.render('login');
 }
+
+// TODO: make as event handler
 app.proto.startVoting = function(id){
     console.log('startVoting '+id);
     //TODO:
 }
-app.proto.isOwner = function(entity){
-    console.log('isOwner?');
-    if(entity)
-        return this.model.get('_session.userId') === entity.owner;
-}
+
+// TODO: make as event handler
 app.proto.addNew = function(namespace){
     console.log('addNew ' + namespace);
     var model = this.model;
@@ -127,37 +77,18 @@ app.proto.addNew = function(namespace){
     this.model.del('_state.'+ namespace +'.new');
 };
 
-app.proto.isSelectedEditable = function(){
-    // TODO:
-    return true;
-}
-app.proto.addUser2participants = function(userId){
-    console.log('addUser2participants ' +userId);
-    this.model.set('_state.votings.selected.participants.'+ userId,{});
-}
-app.on('model', function(model) {
-    model.fn('getKeys', function(obj) {
-        if(obj) return Object.keys(obj);
-    });
-    model.fn('all', function(obj) {
-        return obj;
-    });
-});
-
-// votinglist
-app.proto.delVoting = function(votingId){
-    console.log('delVoting'); console.log(votingId);
-   this.model.del('votings.' + votingId);
-    if(this.model.get('_state.votings.selected.id') === votingId)
-        this.model.del('_state.votings.selected');
-
-}
-
 app.proto.view = function(id){
-    console.log('view');
+    console.log()
     var entity = this.model.get('$render.ns');
-    this.model.ref('_state.'+entity+'.selected', '_state.' + entity + '.list.' + id);
+    this.model.ref('_state.'+entity+'.selected', entity+'.' + id);
 }
+
+
+app.proto.delListItem = function(id){
+    console.log('delList Item ' + id);
+    this.model.del(this.model.get('$render.ns')+'.' + id);
+}
+
 
 app.proto.formatDate = function(date){
     if(date){

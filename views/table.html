@@ -1,22 +1,4 @@
-<index: element="candidats">
-    <h4>
-        Кандидаты
-        {{if @editable}}
-        <button type="button" class="btn btn-default" on-click="setEditMode()">
-            <span class="glyphicon glyphicon-pencil"></span>
-        </button>
-        {{/}}
-    </h4>
-    <p>
-        {{if table}}
-            {{if editMode}}
-                <editable-table></editable-table>
-            {{else}}
-                <view-table></view-table>
-            {{/}}
-        {{/}}
-    </p>
-<editable-table: element="editable-table">
+<editable: element="table-editable">
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -81,8 +63,16 @@
     <button type="button" class="btn btn-success" on-click="addRow()">
         <span class="glyphicon glyphicon-plus"></span> Кандидат
     </button>
+    <editable-cell: element="editable-cell">
+        <form on-submit="doneEditing()">
+            {{if edit.col===@c && edit.row===@r}}
+            <input id="editcell{{@r}}{{@c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+            {{else}}
+            {{@content}}
+            {{/}}
+        </form>
 
-<view-table: element="view-table">
+<readonly: element="table-readonly">
     <table class="table table-bordered">
         <thead>
             <tr>
@@ -103,11 +93,7 @@
             {{/}}
         </tbody>
     </table>
-<editable-cell: element="editable-cell">
-    <form on-submit="doneEditing()">
-        {{if edit.col===@c && edit.row===@r}}
-            <input id="editcell{{@r}}{{@c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
-        {{else}}
-        {{@content}}
-        {{/}}
-    </form>
+
+
+<vote: element="table-vote">
+    votingTABLE
