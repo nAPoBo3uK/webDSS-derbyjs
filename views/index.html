@@ -5,8 +5,8 @@
 <import: src="./navigation">
 <import: src="./account">
 <import: src="./participants">
-<import: src="./table">
 <import: src="./list">
+<import: src="./table">
 
 <Title:>
     webDSS
@@ -23,23 +23,28 @@
     <view name="navigation"></view>
     <div class="container-fluid">
         <div class="col-xs-3">
-            <list data="{{_page.list}}"
+            <list data="{{_state[$render.ns].list}}"
                   owner="{{_session.userId}}"
                   pattern="{{$render.ns}}"
                   on-view="view()"
+                  on-newitem="newItem()"
                   on-delete="delListItem()"
                   on-set-participant="participants.add()"/>
         </div>
         <div class="col-xs-6">
-             {{if _state[$render.ns].mode}}
-                <view name="{{$render.ns}}:{{_state[$render.ns].mode}}" model="{{_state[$render.ns]}}"></view>
+            {{$render.prefix}}{{_state[$render.ns].mode}}
+            {{if _state[$render.ns].mode}}
+                    <view name="{{$render.prefix}}{{_state[$render.ns].mode}}"
+                          model="{{_state[$render.ns][_state[$render.ns].mode]}}"/>
             {{/}}
+
         </div>
         <div class="col-xs-3">
-            {{if _state.votings.selected}}
+            {{if _state.votings.view}}fefef
                 <participants model="{{_state.votings.selected}}"></participants>
             {{/}}
         </div>
+
     </div>
 
 <mode-controls: element="mode-controls">

@@ -1,4 +1,5 @@
 <new:>
+    dsd
     <form role="form" class="form-horizontal" on-submit="addUser(_page.voting)">
         <h3>Новый пользователь</h3>
         <div class="form-group col-xs-5">
@@ -19,15 +20,16 @@
 
 <view:>
     <div class="container">
+        {{@model.selected}}
+        {{@model.selected.local}}
+        {{with @model.selected.local}}
+        <h2>{{this.name}}</h2>
 
-    {{if _page.selected}}
-        <h2>{{_page.selected.name}}</h2>
-        {{with _page.selected.local}}
         <h1>{{this.username}}</h1>
         <h4>{{this.specialism}}</h4>
         <span>{{this.description}}</span>
         {{/}}
-    {{/}}
+
     </div>
 
 

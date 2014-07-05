@@ -1,4 +1,5 @@
-<editable: element="table-editable">
+<editable:>
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -72,17 +73,17 @@
             {{/}}
         </form>
 
-<readonly: element="table-readonly">
+<readonly:>{{table}}
     <table class="table table-bordered">
         <thead>
             <tr>
-                {{each table[0] as #cell, #c}}
+                {{each @table[0] as #cell, #c}}
                     <th><span>{{#cell}}</span></th>
                 {{/}}
             </tr>
         </thead>
         <tbody>
-            {{each table as #row, #r}}
+            {{each @table as #row, #r}}
                 {{if #r!=0}}
                     <tr>
                         {{each #row as #cell, #c}}
@@ -95,5 +96,5 @@
     </table>
 
 
-<vote: element="table-vote">
+<vote:>
     votingTABLE

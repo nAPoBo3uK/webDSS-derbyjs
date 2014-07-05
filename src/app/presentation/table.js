@@ -1,11 +1,9 @@
 /**
  * Created by bolehivsky on 18.06.14.
  */
-var Table = function(){
+var TableEditable = function (){ };
 
-}
-
-Table.prototype.addRow = function(){
+TableEditable.prototype.addRow = function(){
     console.log('newRow');
     var table = this.model.at('table');
     var matrix = table.get();
@@ -16,7 +14,7 @@ Table.prototype.addRow = function(){
     table.push(emptyRow);
 }
 
-Table.prototype.addCol = function(){
+TableEditable.prototype.addCol = function(){
     console.log('add col');
     var table = this.model.at('table');
     var matrix = table.get();
@@ -27,7 +25,7 @@ Table.prototype.addCol = function(){
     console.log(this.model.get());
 }
 
-Table.prototype.delRow = function(row){
+TableEditable.prototype.delRow = function(row){
     console.log('del row ' + row);
     var table = this.model.at('table');
     console.log(table.get());
@@ -35,7 +33,7 @@ Table.prototype.delRow = function(row){
 
 }
 
-Table.prototype.delCol = function(col){
+TableEditable.prototype.delCol = function(col){
     console.log('del col ' + col);
     var table = this.model.at('table');
     var matrix = table.get();
@@ -47,7 +45,7 @@ Table.prototype.delCol = function(col){
     }));
 
 }
-Table.prototype.setEditMode = function(){
+TableEditable.prototype.setEditMode = function(){
     if(this.model.get('editMode')){
         this.model.set('editMode',false);
     } else {
@@ -56,7 +54,7 @@ Table.prototype.setEditMode = function(){
 
 }
 
-Table.prototype.init = function(){
+TableEditable.prototype.init = function(){
     console.log('Table component init');
     this.model.at('table')
     var table = this.model.at('table');
@@ -66,7 +64,7 @@ Table.prototype.init = function(){
     }
 }
 
-Table.prototype.editCell = function(cell, row, col){
+TableEditable.prototype.editCell = function(cell, row, col){
     var self = this;
     this.model.set('edit', {
         row: row,
@@ -78,23 +76,23 @@ Table.prototype.editCell = function(cell, row, col){
     var input = document.getElementById('editcell'+ row +''+ col);
     input.focus();
     input.onblur = function(){
-        Table.prototype.doneEditing.call(self);
+        TableEditable.prototype.doneEditing.call(self);
     }
 
 }
 
-Table.prototype.doneEditing = function(){
+TableEditable.prototype.doneEditing = function(){
     console.log('done editing');
     var cell = this.model.get('edit'); console.log(cell);
     this.model.set('table.' + cell.row + '.' + cell.col, cell.text);
     this.model.del('edit');
 }
 
-Table.prototype.cancelEditing = function(e){
+TableEditable.prototype.cancelEditing = function(e){
     // 27 = ESQ-key
     if (e.keyCode == 27) {
         this.model.del('edit');
     }
 }
 
-module.exports = Table;
+module.exports =  TableEditable;

@@ -1,45 +1,29 @@
-<import: src="./list">
-<import: src="./table">
+
 <view:>
-    {{with @model.selected}}
-        <blockquote>
-            <h2>{{this.name}}</h2>
-            {{if @model.selected.participants.voters && isOwner(@model.selected)}}
-                <button class="btn btn-info btn-lg" on-click="startVoting(@model.selected.id)">
-                    <span class="glyphicon glyphicon-play"/>Старт!
-                </button>
-            {{/}}
-        </blockquote>
-
-        <dl class="dl-horizontal">
-            <dt>Создано:</dt>
-            <dd>{{formatDate(this.timeCreated)}}</dd>
-            <dt>Менеджер:</dt>
-            <dd>{{this.owner}}</dd>
-        </dl>
-        <p>{{this.description}}</p>
-        <hr>
-    {{/}}
-    <candidats table = {{@model.selected.candidats}} editable></candidats>
-
-<new:>
-    <form role="form">
-        <h3>Новое голосование</h3>
-        {{with @model.new}}
-            <div class="form-group">
-                <input name="name" type="text" class="form-control" placeholder="Название" value="{{this.name}}" required autofocus>
-            </div>
-            <div class="form-group">
-                <textarea class="form-control" placeholder="Описание"  rows="3">{{this.description}}</textarea>
-            </div>
-        <candidats table = {{_state.votings.new.candidats}} editable></candidats>
+    <blockquote>
+        <h2>{{@model.name}}</h2>
+        {{if @model.participants.voters}}
+            <button class="btn btn-info btn-lg" on-click="startVoting()">
+                <span class="glyphicon glyphicon-play"/>Старт!
+            </button>
         {{/}}
+    </blockquote>
 
-        <mode-controls></mode-controls>
-    </form>
-
-
-<candidats:>
+    <dl class="dl-horizontal">
+        <dt>Создано:</dt>
+        <dd>{{formatDate(@model.timeCreated)}}</dd>
+        <dt>Менеджер:</dt>
+        <dd>
+            {{with getUser(@model.owner)}}
+                <a href="/users/id">{{this.name}}</a>
+                {{if @model.owner === _session.userId}}
+                    (Вы)
+                {{/}}
+            {{/}}
+        </dd>
+    </dl>
+    <p>{{@model.description}}</p>
+    <hr>
     <h4>
         Кандидаты
         {{if @editable}}
@@ -49,7 +33,30 @@
         {{/}}
     </h4>
     <p>
-        <view name="table:{{getMode()}}"></view>
+        <view name="table:readonly" table = "{{@model.candidats}}"/>
     </p>
+
+
+
+<new:>
+    <form role="form">
+        <h3>Новое голосование</h3>
+
+            <div class="form-group">
+                <input name="name" type="text" class="form-control" placeholder="Название" value="{{@model.name}}" required autofocus>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Описание"  rows="3">{{@model.description}}</textarea>
+            </div>
+
+        <view name="table:editable" table = {{@model.candidats}}></view>
+
+
+        <mode-controls></mode-controls>
+    </form>
+
+
+
+
 
 

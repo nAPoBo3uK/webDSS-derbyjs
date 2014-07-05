@@ -10,7 +10,7 @@
             </ul>
 
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="account">{{_page.user.local.username}}</a></li>
+                <li><a href="account">{{getUser(_session.userId).name}}</a></li>
 
 
             </ul>
@@ -19,6 +19,6 @@
     </div>
 
 <nav-link: element="nav-link">
-    <li class="{{if $render.ns === @href}}active{{/}}">
+    <li class="{{if '/'+$render.ns === @href}}active{{/}}">
         <a href="{{@href}}">{{@content}}</a>
     </li>

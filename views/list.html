@@ -1,9 +1,10 @@
 <index: attributes="row head" element="list">
+
 <form class="form-inline">
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Найти">
     </div>
-    <a class="btn btn-success" href="{{$render.ns}}?action=new">Добавить</a>
+    <a class="btn btn-success" on-click="getNew()">Добавить</a>
 </form>
 <div class="scrollable">
     <table class="table table-hover">

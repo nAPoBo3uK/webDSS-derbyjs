@@ -14,5 +14,9 @@ list.prototype.delete = function(index){
 
 }
 
+list.prototype.getNew= function(){
+    console.log('want new');
+    this.emit('newitem');
 
+}
 module.exports = list;
