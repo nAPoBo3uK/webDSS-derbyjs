@@ -23,25 +23,30 @@
     <view name="navigation"></view>
     <div class="container-fluid">
         <div class="col-xs-3">
-            <list data="{{_state[$render.ns].list}}"
+            <list data="{{_page.list}}"
                   owner="{{_session.userId}}"
                   pattern="{{$render.ns}}"
-                  on-view="view()"
-                  on-newitem="newItem()"
                   on-delete="delListItem()"
                   on-set-participant="participants.add()"/>
         </div>
         <div class="col-xs-6">
-            {{$render.prefix}}{{_state[$render.ns].mode}}
-            {{if _state[$render.ns].mode}}
-                    <view name="{{$render.prefix}}{{_state[$render.ns].mode}}"
-                          model="{{_state[$render.ns][_state[$render.ns].mode]}}"/>
+            {{$render.prefix}}{{_page.mode}}
+            {{if _page.mode}}
+                    <view name="{{$render.prefix}}{{_page.mode}}"
+                          model="{{_page[_page.mode]}}"/>
+            {{else}}
+                Ничего не выбрано
             {{/}}
 
         </div>
         <div class="col-xs-3">
-            {{if _state.votings.view}}fefef
-                <participants model="{{_state.votings.selected}}"></participants>
+            {{if $render.ns=='votings' && _page.mode=='view'}}
+                <participants model="{{_page.view}}"/>
+            {{else if _related.voting}}
+                <b>{{_related.voting[0].name}}.</b>
+                <br>
+                <span>{{_related.voting[0].description}}</span>
+                <participants model="{{_related.voting[0]}}"/>
             {{/}}
         </div>
 
@@ -50,7 +55,7 @@
 <mode-controls: element="mode-controls">
     <div class="form-group">
         <button type="button" class="btn btn-primary btn-lg" on-click="addNew($render.ns)">Сохранить</button>
-        <a role="button" class="btn btn-lg btn-default" on-click="freeNew($render.ns)">Отмена</a>
+        <a role="button" class="btn btn-lg btn-default" href="{{$render.ns}}/new">Отмена</a>
     </div>
 
 

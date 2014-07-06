@@ -17,19 +17,16 @@ app.use(require('./controllers/accountController'));
 app.get('/', function (page, model){
     page.redirect('votings');
 });
-app.use(require('./controllers/votingsController'));
-app.use(require('./controllers/usersController'));
-
+app.use(require('./controllers/appController'));
 
 
 app.component('list', require('./presentation/list'));
 app.component('table:editable', require('./presentation/table'));
 app.on('model', function(model){
-    model.on('all', '**', function (path, event, args) {
+   /* model.on('all', '**', function (path, event, args) {
         console.log('onmodel')
         console.log(arguments);
 
-    });
+    });*/
 
-    ;
 })

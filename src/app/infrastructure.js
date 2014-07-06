@@ -2,10 +2,11 @@
  * Created by bolehivsky on 02.07.14.
  */
 module.exports = function (app){
+
     app.proto.addNew = function(namespace){
         console.log('addNew ' + namespace);
         var model = this.model;
-        var newRecord = model.get('_state.'+ namespace +'.new');
+        var newRecord = model.get('_page.new');
         console.log(newRecord);
         if (!newRecord) return;
         newRecord.owner = model.get('_session.userId');
@@ -21,13 +22,7 @@ module.exports = function (app){
         this.model.del('_state.'+ namespace +'.new');
     };
 
-    app.proto.view = function(id){
-        var entity = this.model.get('$render.ns');
-        console.log('view ' + entity + ' ' + id);
-        console.log((entity==='users')?'auths':entity + '.' + id)
-        this.model.ref('_state.' + entity + '.view', /* TODO: remove this*/(entity==='users')?'auths':entity + '.' + id);
-        this.model.set('_state.' + entity + '.mode', 'view');
-    }
+
     app.proto.newItem = function(){
         console.log('@@@')
         var entity = this.model.get('$render.ns');

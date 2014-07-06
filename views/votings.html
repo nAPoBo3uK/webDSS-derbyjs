@@ -33,7 +33,7 @@
         {{/}}
     </h4>
     <p>
-        <view name="table:readonly" table = "{{@model.candidats}}"/>
+        <view name="table:readonly" table = "{{_page.view.candidats}}"/>
     </p>
 
 
@@ -49,7 +49,7 @@
                 <textarea class="form-control" placeholder="Описание"  rows="3">{{@model.description}}</textarea>
             </div>
 
-        <view name="table:editable" table = {{@model.candidats}}></view>
+        <view name="table:editable" table = {{_page.new.candidats}}></view>
 
 
         <mode-controls></mode-controls>

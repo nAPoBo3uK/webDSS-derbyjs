@@ -1,36 +1,29 @@
 <new:>
-    dsd
     <form role="form" class="form-horizontal" on-submit="addUser(_page.voting)">
         <h3>Новый пользователь</h3>
         <div class="form-group col-xs-5">
-            <input name="username" type="text" class="form-control" placeholder="Имя" value="{{_page.user.username}}" required autofocus>
+            <input name="username" type="text" class="form-control" placeholder="Имя" value="{{@model.username}}" required autofocus>
         </div>
         <div class="form-group col-xs-5">
-            <input name="email" type="email" class="form-control" placeholder="e-mail" value="{{_page.user.email}}" required>
-            <input name="skype" type="text" class="form-control" placeholder="Skype" value="{{_page.user.skype}}">
+            <input name="email" type="email" class="form-control" placeholder="e-mail" value="{{@model.email}}" required>
+            <input name="skype" type="text" class="form-control" placeholder="Skype" value="{{@model.skype}}">
         </div>
         <div class="form-group col-xs-7">
-            <input name="specialism" type="text" class="form-control" placeholder="Специализация" value="{{_page.user.specialism}}">
+            <input name="specialism" type="text" class="form-control" placeholder="Специализация" value="{{@model.specialism}}">
         </div>
         <div class="form-group">
-            <textarea class="form-control" placeholder="Дополнительно"  rows="3">{{_page.user.description}}</textarea>
+            <textarea class="form-control" placeholder="Дополнительно"  rows="3">{{@model.description}}</textarea>
         </div>
         <mode-controls></mode-controls>
     </form>
 
 <view:>
-    <div class="container">
-        {{@model.selected}}
-        {{@model.selected.local}}
-        {{with @model.selected.local}}
-        <h2>{{this.name}}</h2>
+    <h2>{{@model.username}}</h2>
+    <h4>{{@model.specialism}}</h4>
+    <span>{{@model.description}}</span>
 
-        <h1>{{this.username}}</h1>
-        <h4>{{this.specialism}}</h4>
-        <span>{{this.description}}</span>
-        {{/}}
 
-    </div>
+
 
 
 

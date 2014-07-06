@@ -1,8 +1,4 @@
 <index: element="participants">
-    {{if _state.votings.selected && $render.ns!='votings'}}
-        <b>{{@model.name}}.</b>
-        <span>{{@model.description}}</span>
-    {{/}}
     <h4>Участники {{if $render.ns==='votings'}}<a class="btn btn-success" href="/users">
         <span class="glyphicon glyphicon-plus-sign"/>Добавить
     </a>

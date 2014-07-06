@@ -1,10 +1,9 @@
 <index: attributes="row head" element="list">
-
 <form class="form-inline">
     <div class="form-group">
-        <input type="text" class="form-control" placeholder="Найти">
+        <input type="text" class="form-control" placeholder="Найти"/>
     </div>
-    <a class="btn btn-success" on-click="getNew()">Добавить</a>
+    <a class="btn btn-success" href="/{{@pattern}}/new">Добавить</a>
 </form>
 <div class="scrollable">
     <table class="table table-hover">
@@ -19,7 +18,8 @@
         </thead>
         <tbody>
             {{each data as #row, #index}}
-            <tr on-click="select(#index)">
+            <a href="/{{@pattern}}/{{#row.id}}">
+            <tr>
                 {{if @pattern}}
                     <view name="{{@pattern}}-row" data = "{{#row}}"/>
                 {{else}}
@@ -35,6 +35,7 @@
                 {{/}}
 
             </tr>
+            </a>
             {{/each}}
         </tbody>
     </table>
