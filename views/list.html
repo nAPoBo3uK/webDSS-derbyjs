@@ -1,4 +1,4 @@
-<index: attributes="row head" element="list">
+<index: element="list">
 <form class="form-inline">
     <div class="form-group">
         <input type="text" class="form-control" placeholder="Найти"/>
@@ -9,8 +9,8 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                {{if @pattern}}
-                    <view name="{{@pattern}}-head"/>
+                {{if pattern}}
+                    <view name="{{pattern}}-head"/>
                 {{else}}
                     <row-default data = "{{#row}}"/>
                 {{/}}
@@ -18,24 +18,36 @@
         </thead>
         <tbody>
             {{each data as #row, #index}}
-            <a href="/{{@pattern}}/{{#row.id}}">
+
             <tr>
-                {{if @pattern}}
+
+                {{if pattern}}
                     <view name="{{@pattern}}-row" data = "{{#row}}"/>
                 {{else}}
                     <default-row data = "{{#row}}"/>
                 {{/}}
 
                 {{if #row.owner === owner}}
+                    <td>
+                        <button type="button" class="btn btn-default" on-click="delete(#index)">
+                            <span class="glyphicon glyphicon-remove"/>
+                        </button>
+                    </td>
+                {{/}}
+                {{if receiver[#row.id]}}
                 <td>
-                    <button type="button" class="btn btn-default" on-click="delete(#index)">
-                        <span class="glyphicon glyphicon-remove"/>
+                    <span class="glyphicon glyphicon-ok"/>
+                </td>
+                {{else if receiver}}
+                <td>
+                    <button type="button" class="btn btn-default" on-click="setParticipant(#row.id)">
+                        <span class="glyphicon glyphicon-plus"/>
                     </button>
                 </td>
                 {{/}}
 
             </tr>
-            </a>
+
             {{/each}}
         </tbody>
     </table>
@@ -52,17 +64,22 @@
     <th>Имя</th>
     <th>Специализация</th>
 <users-row:>
+    <a href="/users/{{@data.id}}">
     <td>
         {{@data.local.username}}<br>
         <small>{{@data.local.email}}</small>
     </td>
     <td>{{@data.local.specialism}}</td>
+    </a>
+
 
 <!-- votings list pattern -->
 <votings-head:>
     <th>Название</th>
     <th>Создан</th>
 <votings-row:>
-    <td>{{@data.name}}</td>
-    <td>{{formatDate(@data.timeCreated)}}</td>
-    <td>{{@data.status}}</td>
+    <a href="/votings/{{@data.id}}">
+        <td>{{@data.name}}</td>
+        <td>{{formatDate(@data.timeCreated)}}</td>
+        <td>{{@data.status}}</td>
+     </a>

@@ -19,4 +19,13 @@ list.prototype.getNew= function(){
     this.emit('newitem');
 
 }
+list.prototype.setParticipant = function(id){
+    console.log('setParticipant ' + id);
+    this.emit('transfer', id);
+}
+
+list.prototype.init = function(){
+    console.log('list init');
+    console.log(this.model.get());
+}
 module.exports = list;

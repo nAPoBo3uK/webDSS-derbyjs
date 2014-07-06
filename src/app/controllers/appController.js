@@ -17,7 +17,6 @@ module.exports = function(app){
     app.get({from:'/:ns*', to: '/:ns/:id'},{
         forward: function ( model, params, next ) {
             console.log('forward id ')
-            console.log(params);
             if(service[params.ns]){
                 service[params.ns].view(model, params.id);
                 model.set('_page.mode', 'view');
@@ -31,16 +30,11 @@ module.exports = function(app){
         forward: function ( model, params, next ) {
             console.log('from votings ');
             var votingId = params.previous.split('/')[2];
-
             model.set('_related.voting',votingId);
-
-
-
             next();
         }
     })*/
     app.get('/:ns*', function(page, model, params, next){
-        console.log(params);
         if(service[params.ns]){
             service[params.ns].main(page, model, params, next)
         } else next();

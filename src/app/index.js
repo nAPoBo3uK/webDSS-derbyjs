@@ -22,11 +22,14 @@ app.use(require('./controllers/appController'));
 
 app.component('list', require('./presentation/list'));
 app.component('table:editable', require('./presentation/table'));
+app.component('participants', require('./presentation/participants'));
 app.on('model', function(model){
    /* model.on('all', '**', function (path, event, args) {
         console.log('onmodel')
         console.log(arguments);
 
     });*/
-
+    model.fn('all', function(item) {
+        return true;
+    });
 })

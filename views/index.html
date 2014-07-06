@@ -24,10 +24,11 @@
     <div class="container-fluid">
         <div class="col-xs-3">
             <list data="{{_page.list}}"
+                  receiver="{{_related.voting[0].participants}}"
                   owner="{{_session.userId}}"
                   pattern="{{$render.ns}}"
                   on-delete="delListItem()"
-                  on-set-participant="participants.add()"/>
+                  on-transfer="plist.add()"/>
         </div>
         <div class="col-xs-6">
             {{$render.prefix}}{{_page.mode}}
@@ -41,12 +42,12 @@
         </div>
         <div class="col-xs-3">
             {{if $render.ns=='votings' && _page.mode=='view'}}
-                <participants model="{{_page.view}}"/>
+                <view name="participants" as="plist" list="{{_page.view.participants}}"/>
             {{else if _related.voting}}
                 <b>{{_related.voting[0].name}}.</b>
                 <br>
                 <span>{{_related.voting[0].description}}</span>
-                <participants model="{{_related.voting[0]}}"/>
+                <view name="participants" as="plist" list="{{_related.voting[0].participants}}"/>
             {{/}}
         </div>
 
