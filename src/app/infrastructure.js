@@ -13,13 +13,13 @@ module.exports = function (app){
         switch(namespace){
             case 'votings':
                 newRecord.timeCreated = (new Date()).getTime();
+                newRecord.participants = {};
                 break;
             case 'users':
                 break;
         }
         model.add(namespace, newRecord);
-        this.model.del('_state.'+ namespace +'.new');
-        this.model.del('_state.'+ namespace +'.new');
+        this.model.del('_page.new');
     };
 
 
@@ -40,6 +40,7 @@ module.exports = function (app){
     }
 
     app.proto.getUser = function(id){
+        return 'привет'
         var user = this.model.get('auths.'+id +'.local');
         if(user)
             return {

@@ -6,19 +6,26 @@ participants = function(){}
 participants.prototype.del = function(){
 
 }
-participants.prototype.add = function (id) {
+participants.prototype.add = function (id, name) {
     console.log('participants.add ' + id);
-    this.model.set('list.'+id,1);
+    this.model.set('list.'+id,{id:id,name:name,role:true});
     console.log(this.model.get());
 }
-participants.prototype.formatList = function (model){
-    console.log('participants.formatList');
+participants.prototype.delete = function (id){
+    console.log('delete');
+    this.model.del('data.'+id);
 
     return [];
 }
 
 participants.prototype.init = function () {
     console.log('participants list init');
-    console.log(this.model.get('list'));
+    var model=this.model;
+    model.subscribe('data', function() {
+        var filter = model.filter('data', 'all')
+        filter.ref('_page.plist');
+    });
+    console.log(this.model.get());
+
 }
 module.exports = participants;

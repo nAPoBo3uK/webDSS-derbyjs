@@ -42,12 +42,12 @@
         </div>
         <div class="col-xs-3">
             {{if $render.ns=='votings' && _page.mode=='view'}}
-                <view name="participants" as="plist" list="{{_page.view.participants}}"/>
+                <view name="participants" as="plist" list="{{_page.plist}}" data="{{_page.view.participants}}"/>
             {{else if _related.voting}}
                 <b>{{_related.voting[0].name}}.</b>
                 <br>
                 <span>{{_related.voting[0].description}}</span>
-                <view name="participants" as="plist" list="{{_related.voting[0].participants}}"/>
+                <view name="participants" as="plist" list="{{_page.plist}}" data="{{_related.voting[0].participants}}"/>
             {{/}}
         </div>
 

@@ -25,6 +25,7 @@ function view(model, id){
 }
 
 function checkRelatedVoting(page, model){
+    console.log('checkRelatedVoting');
     var pathBlocks = page.params.previous.split('/'); // parse last url
     if (pathBlocks[1] === 'votings' && pathBlocks[2] && pathBlocks[2].length === 36) { // if last page was 'votings' and any voting was selected
         var userVotings = model.query('votings', {'_id': pathBlocks[2]}).subscribe(function () {

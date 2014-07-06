@@ -19,9 +19,9 @@ list.prototype.getNew= function(){
     this.emit('newitem');
 
 }
-list.prototype.setParticipant = function(id){
-    console.log('setParticipant ' + id);
-    this.emit('transfer', id);
+list.prototype.setParticipant = function(user){
+    console.log('setParticipant ' + user.id);
+    this.emit('transfer', user.id, user.local.username);
 }
 
 list.prototype.init = function(){

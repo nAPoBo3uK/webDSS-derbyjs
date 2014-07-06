@@ -4,7 +4,6 @@
 module.exports = {
     validateSession: function userExists(page, model, params, next){
         console.log('derby get');
-        console.log(params);
         if (model.get('_session.loggedIn')) {
             next();
         } else if (params.url === '/registration' || params.url === '/registration/') {
