@@ -11,11 +11,15 @@ participants.prototype.add = function (id, name) {
     this.model.set('list.'+id,{id:id,name:name,role:true});
     console.log(this.model.get());
 }
+
+participants.prototype.deleteAll = function (){
+    console.log('deleteAll');
+    this.model.set('data',{});
+}
+
 participants.prototype.delete = function (id){
     console.log('delete');
     this.model.del('data.'+id);
-
-    return [];
 }
 
 participants.prototype.init = function () {
