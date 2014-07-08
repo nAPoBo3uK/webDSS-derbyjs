@@ -1,15 +1,26 @@
 
 <view:>
-    <blockquote>
+    <div class="blockquote">
         <h2>{{@model.name}}
-        {{if @model.candidats.length>2 && Object.keys(@model.participants).length && @model.owner === _session.userId}}
-            <button class="btn btn-info btn-lg" on-click="startVoting(@model)">
-                <span class="glyphicon glyphicon-play"/>Старт!
+            <button class="btn btn-default" on-click="startVoting(@model)">
+                <span class="glyphicon glyphicon-print"/>
             </button>
-        {{/}}</h2>
-    </blockquote>
+            {{if !model.dateFinished && _session.userId==@model.owner}}
+                {{if @model.dateStarted}}
+                <button class="btn btn-danger" on-click="stopVoting(@model)">
+                    <span class="glyphicon glyphicon-stop"/> Остановить
+                </button>
+                {{else if @model.candidats.length>2 && Object.keys(@model.participants).length && @model.owner === _session.userId}}
+                <button class="btn btn-info" on-click="startVoting(@model)">
+                    <span class="glyphicon glyphicon-play"/> Старт!
+                </button>
+                {{/}}
+            {{/}}
+        </h2>
 
-    <dl class="dl-horizontal">
+    </div>
+
+    <dl class="dl-horizontal ">
         <dt>Создано:</dt>
         <dd>{{formatDate(@model.timeCreated)}}</dd>
         <dt>Менеджер:</dt>
@@ -26,8 +37,8 @@
     <hr>
     {{if @model.dateStarted}}
     <div class="progress">
-        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{_page.progress}}%">
-            <span class="sr-only">40% Complete (success)</span>
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{_page.progress}}%">
+            {{_page.progress}}% Проголосовало
         </div>
     </div>
     {{/}}
@@ -71,13 +82,13 @@
         <h3>Новое голосование</h3>
 
             <div class="form-group">
-                <input name="name" type="text" class="form-control" placeholder="Название" value="{{@model.name}}" required autofocus>
+                <input name="name" type="text" class="form-control" placeholder="Название" value="{{_page.new.name}}" required autofocus>
             </div>
             <div class="form-group">
-                <textarea class="form-control" placeholder="Описание"  rows="3">{{@model.description}}</textarea>
+                <textarea class="form-control" placeholder="Описание"  rows="3">{{_page.new.description}}</textarea>
             </div>
 
-        <view name="table:editable" table = {{_page.new.candidats}}></view>
+        <view name="table" table = {{_page.new.candidats}}></view>
 
 
         <mode-controls></mode-controls>

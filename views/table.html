@@ -103,21 +103,33 @@
 
 
 <vote:>
-    votingTABLE
     <table class="table table-bordered">
         <thead>
         <tr>
-            {{each @table[0] as #cell, #c}}
+            {{each table[0] as #cell, #c}}
             <th><span>{{#cell}}</span></th>
             {{/}}
         </tr>
         </thead>
         <tbody>
-        {{each @table as #row, #r}}
+        {{each table as #row, #r}}
         {{if #r!=0}}
         <tr>
-            {{each #row as #cell, #c}}
-            <td><span>{{#cell}}</span></td>
+            {{each table[vote[#r-1]+1] as #cell, #c}}
+            <td>
+                {{if #c == 0}}
+                <button type="button" class="btn btn-xs" on-click="up(#r-1)">
+                    <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+                <span>{{#cell}}</span>
+                <button type="button" class="btn btn-xs" on-click="down(#r-1)">
+                    <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                {{else}}
+                <span>{{#cell}}</span>
+                {{/}}
+
+            </td>
             {{/}}
         </tr>
         {{/}}
