@@ -62,6 +62,7 @@ TableEditable.prototype.init = function(){
     if(!matrix || !matrix.length) {
         table.push(['']);
     }
+    this.model.set('editable', true);
 }
 
 TableEditable.prototype.editCell = function(cell, row, col){
@@ -94,5 +95,7 @@ TableEditable.prototype.cancelEditing = function(e){
         this.model.del('edit');
     }
 }
-
+TableEditable.prototype.switchEditMode = function(){
+    this.model.set('editable',this.model.get('editable')?false:true);
+}
 module.exports =  TableEditable;

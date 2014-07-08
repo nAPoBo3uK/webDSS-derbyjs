@@ -1,5 +1,11 @@
-<editable:>
+<index:>
+    {{if editable}}
+        <view name="editable"/>
+    {{else}}
+        <view name="readonly"/>
 
+    {{/}}
+<editable:>
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -73,17 +79,17 @@
             {{/}}
         </form>
 
-<readonly:>{{table}}
+<readonly:>
     <table class="table table-bordered">
         <thead>
             <tr>
-                {{each @table[0] as #cell, #c}}
+                {{each table[0] as #cell, #c}}
                     <th><span>{{#cell}}</span></th>
                 {{/}}
             </tr>
         </thead>
         <tbody>
-            {{each @table as #row, #r}}
+            {{each table as #row, #r}}
                 {{if #r!=0}}
                     <tr>
                         {{each #row as #cell, #c}}
@@ -98,3 +104,23 @@
 
 <vote:>
     votingTABLE
+    <table class="table table-bordered">
+        <thead>
+        <tr>
+            {{each @table[0] as #cell, #c}}
+            <th><span>{{#cell}}</span></th>
+            {{/}}
+        </tr>
+        </thead>
+        <tbody>
+        {{each @table as #row, #r}}
+        {{if #r!=0}}
+        <tr>
+            {{each #row as #cell, #c}}
+            <td><span>{{#cell}}</span></td>
+            {{/}}
+        </tr>
+        {{/}}
+        {{/}}
+        </tbody>
+    </table>

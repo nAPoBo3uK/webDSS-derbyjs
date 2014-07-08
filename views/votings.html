@@ -1,12 +1,12 @@
 
 <view:>
     <blockquote>
-        <h2>{{@model.name}}</h2>
-        {{if @model.participants.voters}}
-            <button class="btn btn-info btn-lg" on-click="startVoting()">
+        <h2>{{@model.name}}
+        {{if @model.candidats.length>2 && Object.keys(@model.participants).length && @model.owner === _session.userId}}
+            <button class="btn btn-info btn-lg" on-click="startVoting(@model)">
                 <span class="glyphicon glyphicon-play"/>Старт!
             </button>
-        {{/}}
+        {{/}}</h2>
     </blockquote>
 
     <dl class="dl-horizontal">
@@ -24,18 +24,46 @@
     </dl>
     <p>{{@model.description}}</p>
     <hr>
+    {{if @model.dateStarted}}
+    <div class="progress">
+        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: {{_page.progress}}%">
+            <span class="sr-only">40% Complete (success)</span>
+        </div>
+    </div>
+    {{/}}
     <h4>
         Кандидаты
-        {{if @editable}}
-        <button type="button" class="btn btn-default" on-click="setEditMode()">
+        {{if @model.owner==_session.userId}}
+        <button type="button" class="btn btn-default" on-click="table.switchEditMode()">
             <span class="glyphicon glyphicon-pencil"></span>
+        </button>
+        {{/}}
+        {{if @model.timeFinish}}
+        <button type="button" class="btn btn-default" on-click="viewResults()">
+            <span class="glyphicon glyphicon-pencil"/> Результаты
         </button>
         {{/}}
     </h4>
     <p>
-        <view name="table:readonly" table = "{{_page.view.candidats}}"/>
+        {{if @model.owner==_session.userId}}
+        влвделец
+            {{if tableMode=='results'}}
+            <view name="results" table = "{{_page.view.results}}"/>
+            {{else}}
+            <view name="table" as="table" table = "{{_page.view.candidats}}"/>
+            {{/}}
+        {{else if @model.participants[_session.userId].role == 1}}
+       эксперт
+        <view name="table:vote" table = "{{_page.view.candidats}}" vote="{{_page.view.participants[_session.userId].vote}}"/>
+        {{else if @model.participants[_session.userId].role == 0}}
+            наблюдатель
+            <view name="table:readonly" table = "{{_page.view.candidats}}"/>
+        {{/}}
+
     </p>
 
+<results:>
+    Резултатты голосования
 
 
 <new:>

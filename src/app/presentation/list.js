@@ -26,6 +26,5 @@ list.prototype.setParticipant = function(user){
 
 list.prototype.init = function(){
     console.log('list init');
-    console.log(this.model.get());
 }
 module.exports = list;

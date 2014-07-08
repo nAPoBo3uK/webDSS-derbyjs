@@ -21,7 +21,7 @@ app.use(require('./controllers/appController'));
 
 
 app.component('list', require('./presentation/list'));
-app.component('table:editable', require('./presentation/table'));
+app.component('table', require('./presentation/table'));
 app.component('participants', require('./presentation/participants'));
 app.on('model', function(model){
    /* model.on('all', '**', function (path, event, args) {
@@ -32,4 +32,14 @@ app.on('model', function(model){
     model.fn('all', function(item) {
         return true;
     });
+
+    model.fn('progress', function(voters){
+        var counter = 0;
+        var all=0;
+        for (var p in voters) {
+            if(voters[p].vote) counter++;
+            all++;
+        }
+        return Math.floor(counter/(all/100));
+    })
 })

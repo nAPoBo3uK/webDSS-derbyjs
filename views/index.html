@@ -24,6 +24,7 @@
     <div class="container-fluid">
         <div class="col-xs-3">
             <list data="{{_page.list}}"
+                  expertList = "{{_page.expertList}}"
                   receiver="{{_related.voting[0].participants}}"
                   owner="{{_session.userId}}"
                   pattern="{{$render.ns}}"
@@ -31,24 +32,34 @@
                   on-transfer="plist.add()"/>
         </div>
         <div class="col-xs-6">
-            {{$render.prefix}}{{_page.mode}}
-            {{if _page.mode}}
-                    <view name="{{$render.prefix}}{{_page.mode}}"
-                          model="{{_page[_page.mode]}}"/>
+            {{if _page.mode==='view'}}
+                    <view name="{{$render.prefix}}view" model="{{_page.view}}"/>
+            {{else if _page.mode==='new'}}
+                <view name="{{$render.prefix}}new" model="{{_page.new}}"/>
             {{else}}
                 Ничего не выбрано
             {{/}}
 
         </div>
         <div class="col-xs-3">
+{{if _session.userId == _page.view.owner}}
             {{if $render.ns=='votings' && _page.mode=='view'}}
+                <h4>Участники {{if $render.ns==='votings'}}<a class="btn btn-success" href="/users">
+                    <span class="glyphicon glyphicon-plus-sign"/>Добавить
+                </a>
+                    {{/}}
+                </h4>
                 <view name="participants" as="plist" list="{{_page.plist}}" data="{{_page.view.participants}}"/>
             {{else if _related.voting}}
-                <b>{{_related.voting[0].name}}.</b>
-                <br>
+
+                <h4>Голосование</h4>
+<p>
+                <h5><b>{{_related.voting[0].name}}</b></h5>
                 <span>{{_related.voting[0].description}}</span>
+            </p>
                 <view name="participants" as="plist" list="{{_page.plist}}" data="{{_related.voting[0].participants}}"/>
             {{/}}
+         {{/}}
         </div>
 
     </div>

@@ -7,17 +7,25 @@ var service = {
 };
 
 module.exports = function(app){
+    app.get({from:'/users*', to: '/votings*'},{
+        forward: function ( model, params, next ) {
+            console.log('from users ');
+            model.del('_related.voting');
+            next();
+        }
+    })
     app.get({from:'/:ns*', to: '/:ns/new'},{
         forward: function ( model, params, next ) {
             console.log('forward new');
             model.set('_page.mode', 'new');
+            model.set('_page.new', {});
         }
     })
 
     app.get({from:'/:ns*', to: '/:ns/:id'},{
         forward: function ( model, params, next ) {
             console.log('forward id ')
-            if(service[params.ns]){
+            if(service[params.ns]){console.log('@');console.log( service[params.ns]);
                 service[params.ns].view(model, params.id);
                 model.set('_page.mode', 'view');
             } else {
@@ -26,6 +34,7 @@ module.exports = function(app){
         }
 
     })
+
   /*  app.get({from:'/votings/:id', to: '/users*'},{
         forward: function ( model, params, next ) {
             console.log('from votings ');

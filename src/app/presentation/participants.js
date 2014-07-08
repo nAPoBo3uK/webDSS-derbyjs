@@ -29,7 +29,5 @@ participants.prototype.init = function () {
         var filter = model.filter('data', 'all')
         filter.ref('_page.plist');
     });
-    console.log(this.model.get());
-
 }
 module.exports = participants;

@@ -17,42 +17,47 @@
             </tr>
         </thead>
         <tbody>
-            {{each data as #row, #index}}
-
-            <tr>
-
-                {{if pattern}}
-                    <view name="{{@pattern}}-row" data = "{{#row}}"/>
-                {{else}}
-                    <default-row data = "{{#row}}"/>
-                {{/}}
-
-                {{if #row.owner === owner}}
-                    <td>
-                        <button type="button" class="btn btn-default" on-click="delete(#index)">
-                            <span class="glyphicon glyphicon-remove"/>
-                        </button>
-                    </td>
-                {{/}}
-                {{if receiver[#row.id]}}
-                <td>
-                    <span class="glyphicon glyphicon-ok"/>
-                </td>
-                {{else if receiver}}
-                <td>
-                    <button type="button" class="btn btn-default" on-click="setParticipant(#row)">
-                        <span class="glyphicon glyphicon-plus"/>
-                    </button>
-                </td>
-                {{/}}
-
-            </tr>
-
-            {{/each}}
+            <view name="body" data="{{data}}"/>
+            {{if expertList}}
+            <tr><th>Эксперт</th></tr>
+            <view name="body" data="{{expertList}}"/>
+            {{/}}
         </tbody>
     </table>
 </div>
+<body:>
+    {{each @data as #row, #index}}
 
+    <tr on-click="page.redirect('/'+pattern+'/'+#row.id)">
+
+        {{if pattern}}
+        <view name="{{pattern}}-row" data = "{{#row}}"/>
+        {{else}}
+        <default-row data = "{{#row}}"/>
+        {{/}}
+
+        {{if #row.owner === owner}}
+        <td>
+            <button type="button" class="btn btn-default" on-click="delete(#index)">
+                <span class="glyphicon glyphicon-remove"/>
+            </button>
+        </td>
+        {{/}}
+        {{if receiver[#row.id]}}
+        <td>
+            <span class="glyphicon glyphicon-ok"/>
+        </td>
+        {{else if receiver}}
+        <td>
+            <button type="button" class="btn btn-default" on-click="setParticipant(#row)">
+                <span class="glyphicon glyphicon-plus"/>
+            </button>
+        </td>
+        {{/}}
+
+    </tr>
+
+    {{/each}}
 <!-- default list pattern -->
 <default-row: element="default-row">
     <td>{{@data.name}}</td>
@@ -64,13 +69,17 @@
     <th>Имя</th>
     <th>Специализация</th>
 <users-row:>
-    <a href="/users/{{@data.id}}">
+
     <td>
-        {{@data.local.username}}<br>
-        <small>{{@data.local.email}}</small>
+
+            {{@data.local.username}}<br>
+            <small>{{@data.local.email}}</small>
     </td>
-    <td>{{@data.local.specialism}}</td>
-    </a>
+    <td>
+            {{@data.local.specialism}}
+     </td>
+
+
 
 
 <!-- votings list pattern -->
@@ -78,8 +87,7 @@
     <th>Название</th>
     <th>Создан</th>
 <votings-row:>
-    <a href="/votings/{{@data.id}}">
+
         <td>{{@data.name}}</td>
         <td>{{formatDate(@data.timeCreated)}}</td>
         <td>{{@data.status}}</td>
-     </a>
