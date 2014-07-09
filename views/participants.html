@@ -4,7 +4,7 @@
             <thead>
                 <tr>
                     <th>
-                        <button type="button" class="btn btn-danger" on-click="deleteAll()">
+                        <button type="button" class="btn btn-danger {{if disabled}}disabled{{/}}" on-click="deleteAll()">
                             <span class="glyphicon glyphicon-remove"/>
                         </button>
                     </th>
@@ -16,13 +16,19 @@
             {{each list as #participant, #index}}
             <tr>
                 <td>
-                    <button type="button" class="btn btn-default" on-click="delete(#participant.id)">
+                    <button type="button" class="btn btn-default {{if disabled}}disabled{{/}}" on-click="delete(#participant.id)">
                         <span class="glyphicon glyphicon-remove"/>
                     </button>
                 </td>
                 <td>{{#participant.name}}</td>
                 <td>
+                    {{if !disabled}}
                     <input type="checkbox" checked="{{#participant.role}}">
+
+                    {{else if disabled && #participant.role}}
+                    <span class="glyphicon glyphicon-ok"/>
+                    {{/}}
+
                 </td>
 
             </tr>

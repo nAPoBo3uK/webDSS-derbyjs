@@ -37,7 +37,7 @@ module.exports = function (app){
         model.del(entityName +'.' + id);
         if(model.get('_state.'+entityName+'.selected.id') == id)
             model.del('_state.'+entityName+'.selected');
-        model.del('_page.view');
+        app.page.redirect('/')
     }
 
     app.proto.getUser = function(id){
@@ -53,17 +53,7 @@ module.exports = function (app){
 
     app.proto.startVoting = function(voting){
         console.log('start voting ' + voting.id);
-        var pKeys = Object.keys(voting.participants);
-        for(var i in pKeys){
-            if(voting.participants[pKeys[i]].role){
-                this.model.push('auths.'+pKeys[i] +'.local.expert',voting.id);
-            } else {
-                this.model.push('auths.'+pKeys[i] +'.local.observer',voting.id);
-            }
-        }
         this.model.set('votings.' + voting.id +'.timeStarted', (new Date()).getTime());
-
-
     }
     app.proto.viewResults = function(){
         this.model.set('_page.viewResults', this.model.get('_page.viewResults')?false:true);

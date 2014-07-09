@@ -3,9 +3,6 @@
  */
 participants = function(){}
 
-participants.prototype.del = function(){
-
-}
 participants.prototype.add = function (id, name) {
     console.log('participants.add ' + id);
     this.model.set('list.'+id,{id:id,name:name,role:true});

@@ -49,7 +49,7 @@
                 </a>
                     {{/}}
                 </h4>
-                <view name="participants" as="plist" list="{{_page.plist}}" data="{{_page.view.participants}}"/>
+                <view name="participants" as="plist" list="{{_page.plist}}" data="{{_page.view.participants}}" disabled="{{_page.view.timeStarted}}"/>
             {{else if _related.voting}}
 
                 <h4>Голосование</h4>

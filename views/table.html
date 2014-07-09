@@ -103,6 +103,7 @@
 
 
 <vote:>
+
     <table class="table table-bordered">
         <thead>
         <tr>
@@ -114,20 +115,30 @@
         <tbody>
         {{each table as #row, #r}}
         {{if #r!=0}}
+
         <tr>
-            {{each table[vote[#r-1]+1] as #cell, #c}}
+
+            {{each table[editvote[#r-1]+1] as #cell, #c}}
             <td>
-                {{if #c == 0}}
-                <button type="button" class="btn btn-xs" on-click="up(#r-1)">
-                    <span class="glyphicon glyphicon-arrow-up"></span>
-                </button>
-                <span>{{#cell}}</span>
-                <button type="button" class="btn btn-xs" on-click="down(#r-1)">
-                    <span class="glyphicon glyphicon-arrow-down"></span>
-                </button>
-                {{else}}
-                <span>{{#cell}}</span>
+                {{if enable && #c==0}}
+                <div class="votingbtngroup">
+
+                    <button type="button" class="btn btn-default btn-xs" on-click="up(#r-1)">
+                        <span class="glyphicon glyphicon-chevron-up"></span>
+
+                    </button>
+                    <br>
+                    <button type="button" class="btn btn-default btn-xs" on-click="down(#r-1)">
+                        <span class="glyphicon glyphicon-chevron-down"></span>
+
+                    </button>
+
+
+
+                </div>
                 {{/}}
+                <span>{{#cell}}</span>
+
 
             </td>
             {{/}}
@@ -136,3 +147,6 @@
         {{/}}
         </tbody>
     </table>
+    {{if !vote}}
+        <button type="button" class="btn btn-primary" on-click="save()">Проголосовать</button>
+    {{/}}

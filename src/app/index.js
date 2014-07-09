@@ -2,14 +2,12 @@ var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
 var votingMethods = require('./services/votingMethods');
 global.app = app;
-global.derby = derby;
 
 app.use(require('d-bootstrap'));
 app.use(require('./infrastructure'));
 
 app.loadViews (__dirname + '/../../views');
 app.loadStyles(__dirname + '/../../styles');
-
 
 
 app.use(require('./controllers/accessController'));
@@ -24,6 +22,10 @@ app.component('list', require('./presentation/list'));
 app.component('table', require('./presentation/table'));
 app.component('table:vote', require('./presentation/votingTable'));
 app.component('participants', require('./presentation/participants'));
+
+
+
+
 app.on('model', function(model){
     model.on('all', 'votings.*.participants.*.vote', function (votingId, userId, event, action) {
         console.log('onmodel')
@@ -38,7 +40,7 @@ app.on('model', function(model){
                     console.log(result);
                     model.set('votings.'+votingId+'.results', result);
                 });
-                model.set('votings.'+votingId+'.dateFinished', (new Date()).getTime());
+                model.set('votings.'+votingId+'.timeFinished', (new Date()).getTime());
             }
         }
         console.log(arguments);
@@ -57,15 +59,7 @@ app.on('model', function(model){
                 if(votes[p].vote) counter++;
                 all++;
             }
-
-
         }
-
-    /*    if(counter===all) {
-
-
-        }*/
-
         return Math.floor(counter/(all/100));
     })
 })

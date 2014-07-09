@@ -5,8 +5,8 @@
             <button class="btn btn-default right" on-click="print(@model)">
                 <span class="glyphicon glyphicon-print"/>
             </button>
-            {{if !@model.dateFinished && _session.userId==@model.owner}}
-                {{if @model.dateStarted}}
+            {{if !@model.timeFinished && _session.userId==@model.owner}}
+                {{if @model.timeStarted}}
                 <button class="btn btn-danger right" on-click="stopVoting(@model)">
                     <span class="glyphicon glyphicon-stop"/> Остановить
                 </button>
@@ -21,33 +21,47 @@
     </div>
 
     <dl class="dl-horizontal ">
-        <dt>Создано:</dt>
-        <dd>{{formatDate(@model.timeCreated)}}</dd>
         <dt>Менеджер:</dt>
         <dd>
             {{with getUser(@model.owner)}}
-                <a href="/users/id">{{this.name}}</a>
-                {{if @model.owner === _session.userId}}
-                    (Вы)
-                {{/}}
+            <a href="/users/id">{{this.name}}</a>
+            {{if @model.owner === _session.userId}}
+            (Вы)
+            {{/}}
             {{/}}
         </dd>
+        <dt>Создано:</dt>
+        <dd>{{formatDate(@model.timeCreated)}}</dd>
+        {{if @model.timeStarted}}
+        <dt>Запущено:</dt>
+        <dd>{{formatDate(@model.timeStarted)}}</dd>
+        {{/}}
+        {{if @model.timeFinished}}
+        <dt>Завершено:</dt>
+        <dd>{{formatDate(@model.timeFinished)}}</dd>
+        {{/}}
+
     </dl>
     <p>{{@model.description}}</p>
     <hr>
-    {{if @model.dateStarted}}
+    {{if @model.timeStarted}}
     <div class="progress">
-        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: {{_page.progress}}%">
+        <div class="progress-bar progress-bar-success progress-bar-striped active"
+             role="progressbar"
+             aria-valuenow="0"
+             aria-valuemin="0"
+             aria-valuemax="100"
+             style="width: {{_page.progress}}%">
             {{_page.progress}}% Проголосовало
         </div>
     </div>
     {{/}}
     <h4>
         Кандидаты
-        {{if @model.owner==_session.userId}}
-        <button type="button" class="btn btn-default" on-click="table.switchEditMode()">
-            <span class="glyphicon glyphicon-pencil"></span>
-        </button>
+        {{if @model.owner==_session.userId && !@model.timeStarted}}
+            <button type="button" class="btn btn-default" on-click="table.switchEditMode()">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </button>
         {{if @model.results}}
         <button type="button" class="btn btn-info right" on-click="viewResults()">
             <span class="glyphicon glyphicon-list"/> Результаты

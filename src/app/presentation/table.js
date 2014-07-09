@@ -61,8 +61,8 @@ TableEditable.prototype.init = function(){
     var matrix = table.get();
     if(!matrix || !matrix.length) {
         table.push(['']);
-    }
-    this.model.set('editable', false);
+        this.model.set('editable', true);
+    } else this.model.set('editable', false);
 }
 
 TableEditable.prototype.editCell = function(cell, row, col){

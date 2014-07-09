@@ -25,8 +25,8 @@ module.exports = function(app){
 
     app.get({from:'/:ns*', to: '/:ns/:id'},{
         forward: function ( model, params, next ) {
-            console.log('forward id ')
-            if(service[params.ns]){console.log('@');console.log( service[params.ns]);
+            console.log('forward id ' + params.id)
+            if(service[params.ns] && params.id){console.log('@');console.log( service[params.ns]);
                 service[params.ns].view(model, params.id);
                 model.set('_page.mode', 'view');
             } else {
