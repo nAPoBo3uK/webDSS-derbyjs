@@ -48,12 +48,13 @@
         <button type="button" class="btn btn-default" on-click="table.switchEditMode()">
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
-        {{/}}
         {{if @model.results}}
         <button type="button" class="btn btn-info right" on-click="viewResults()">
             <span class="glyphicon glyphicon-list"/> Результаты
         </button>
         {{/}}
+        {{/}}
+
     </h4>
     <p>
         {{if @model.owner==_session.userId}}
@@ -80,7 +81,7 @@
             <li>
                 <p>
                     <b>Борда: </b>
-                        <view name="range" range="{{invertRange(@data.mBorda)}}"/>
+                        <view name="range" range="{{@data.mBorda}}"/>
                 </p>
             </li>
             <li>
@@ -92,7 +93,7 @@
             <li>
                 <p>
                     <b>Фишберн: </b>
-                    <view name="range" range="{{invertRange(@data.Fishbern)}}"/>
+                    <view name="range" range="{{@data.Fishbern}}"/>
                 </p>
             </li>
             <li>

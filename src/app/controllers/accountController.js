@@ -1,8 +1,10 @@
 /**
  * Created by bolehivsky on 30.06.14.
  */
+var service = require('../services/accountService');
+
 module.exports = function(app){
-    app.get('/account', function (page, model){ page.render('account'); });
-    app.get('/login', function (page){ page.redirect('/'); });
-    app.get('/registration', function (page){ page.redirect('/'); });
+    app.get('/account', service.account );
+    app.get('/login', service.registration );
+    app.get('/registration', service.login );
 }

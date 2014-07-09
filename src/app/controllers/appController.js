@@ -7,6 +7,7 @@ var service = {
 };
 
 module.exports = function(app){
+
     app.get({from:'/users*', to: '/votings*'},{
         forward: function ( model, params, next ) {
             console.log('from users ');
@@ -48,6 +49,7 @@ module.exports = function(app){
             service[params.ns].main(page, model, params, next)
         } else next();
     });
+
   /*  app.get('/:ns/:id', function(page, model, params, next) {
         if(service[params.ns] && service[params.ns].options) {
             service[params.ns].main(page, model, params, next);

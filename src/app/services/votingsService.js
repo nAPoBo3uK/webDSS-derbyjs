@@ -4,7 +4,7 @@
 module.exports = {
     main: function ( page, model, params, next, cb) {
         var userId =model.get('_session.userId');
-        var i=-2;
+        var i=-3;
         var userVotings = model.query('votings',{'owner':userId }).subscribe(function(){
             userVotings.ref('_page.list');
             i++;
@@ -14,17 +14,24 @@ module.exports = {
             }
         });
         var query = {};
-        query['participants.'+userId]={$exists: true}
-        var partVotings = model.query('votings', query).subscribe(function(){
-            partVotings.ref('_page.expertList');
+        query['participants.'+userId+'.role']={$eq: true}
+        var expertPart = model.query('votings', query).subscribe(function(){
+            expertPart.ref('_page.expertList');
             i++;
             if(i==0) {
                 if(cb) cb(page, model, params, next);
                 page.render('votings');
             }
-
         });
-
+        query['participants.'+userId+'.role']={$eq: false}
+        var observerPart = model.query('votings', query).subscribe(function(){
+            observerPart.ref('_page.observerList');
+            i++;
+            if(i==0) {
+                if(cb) cb(page, model, params, next);
+                page.render('votings');
+            }
+        });
     },
     view: function (model, id) {
         console.log('votings view')

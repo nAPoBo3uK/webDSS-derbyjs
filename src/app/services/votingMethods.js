@@ -55,11 +55,6 @@ module.exports = function (usersPreferences, cb){
     }
 
     FilledArray.prototype = Object.defineProperties([], {
-        length:{
-            value:0,
-            writable : true,
-            enumerable : false
-        },
 
         range: {
             value: function( desc ){
@@ -203,11 +198,11 @@ module.exports = function (usersPreferences, cb){
     var comaprisons = usersPreferences.getPairwiseComparisons();
 
     var result = {
-        'Borda': borda ( usersPreferences ).range(),
-        'mBorda':mBorda ( comaprisons ).range(),
-        'Jodson':jodson ( comaprisons ).range('desc'),
-        'Simpson':simpson ( comaprisons ).range(),
-        'Fishbern': fisbern ( comaprisons )
+        'Borda': borda ( usersPreferences ).range('desc'),
+        'mBorda':mBorda ( comaprisons ).range('desc'),
+        'Jodson':jodson ( comaprisons ).range(),
+        'Simpson':simpson ( comaprisons ).range('desc'),
+        'Fishbern': fisbern ( comaprisons ).range('desc')
     }
     cb(result);/*
     console.log('Borda ' + borda ( usersPreferences ).range().toString());

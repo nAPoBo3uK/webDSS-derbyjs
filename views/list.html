@@ -22,6 +22,10 @@
             <tr><th>Эксперт</th></tr>
             <view name="body" data="{{expertList}}"/>
             {{/}}
+            {{if observerList}}
+            <tr><th>Наблюдатель</th></tr>
+            <view name="body" data="{{observerList}}"/>
+            {{/}}
         </tbody>
     </table>
 </div>
@@ -49,7 +53,7 @@
         </td>
         {{else if receiver}}
         <td>
-            <button type="button" class="btn btn-default" on-click="setParticipant(#row)">
+            <button type="button" class="btn btn-default btn-xs" on-click="setParticipant(#row)">
                 <span class="glyphicon glyphicon-plus"/>
             </button>
         </td>
@@ -88,6 +92,11 @@
     <th>Создан</th>
 <votings-row:>
 
-        <td>{{@data.name}}</td>
+        <td>{{if @data.results}}
+            <span class="glyphicon glyphicon-ok-sign"/>
+            {{else if @data.dateStarted}}
+            <span class="glyphicon glyphicon-send"/>
+            {{/}} {{@data.name}}
+        </td>
         <td>{{formatDate(@data.timeCreated)}}</td>
         <td>{{@data.status}}</td>

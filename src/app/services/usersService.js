@@ -28,8 +28,10 @@ function checkRelatedVoting(page, model){
     console.log('checkRelatedVoting');
     var pathBlocks = page.params.previous.split('/'); // parse last url
     if (pathBlocks[1] === 'votings' && pathBlocks[2] && pathBlocks[2].length === 36) { // if last page was 'votings' and any voting was selected
+
         var userVotings = model.query('votings', {'_id': pathBlocks[2]}).subscribe(function () {
-            userVotings.ref('_related.voting');
+            if(model.get('votings.'+pathBlocks[2]).owner == model.get('_session.userId'))
+                userVotings.ref('_related.voting');
         });
     }
 }

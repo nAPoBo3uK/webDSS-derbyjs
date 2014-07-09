@@ -1,17 +1,30 @@
-<index:>
+<Body:>
+    <view name="navigation"></view>
+    <view name="body" user="{{_page.user}}"></view>
+<body:>
     <div class="container">
         <h1>
             Аккаунт
+            <button class="btn btn-danger right" on-click="modal.show()">
+                <span class="glyphicon glyphicon-trash"/>
+            </button>
+            <view name="modal" as="modal" title="Удаление аккаунта" on-delete="confirmAccountRemove()">
+                <action class="btn-primary" value="delete">Да</action>
+                <action>Отмена</action>
+                <h3>Вы действительно хотите удалить свой аккаунт?</h3>
+            </view>
         </h1>
-        {{with _page.user.local}}
+        {{with user.local}}
             <h2>{{this.username}}</h2>
             <p><b>e-mail:</b> {{this.email}}</p>
             <p><b>Skype:</b> {{this.skype}}</p>
             <p><b>Специализация:</b> {{this.specialism}}</p>
             <p><b>О себе:</b> <p>{{this.description}}</p></p>
         {{/}}
-        {{with _page.user.timestamps}}
+        {{with user.timestamps}}
             <p><b>Зарегистрирован:</b> {{formatDate(this.registered)}}</p>
             <p><b>Заходил:</b> {{formatDate(this.loggedin)}}</p>
         {{/}}
     </div>
+
+

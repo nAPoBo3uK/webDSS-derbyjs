@@ -53,8 +53,12 @@ app.on('model', function(model){
         var counter = 0;
         var all=0;
         for (var p in votes) {
-            if(votes[p].vote) counter++;
-            all++;
+            if(votes[p].role){
+                if(votes[p].vote) counter++;
+                all++;
+            }
+
+
         }
 
     /*    if(counter===all) {
