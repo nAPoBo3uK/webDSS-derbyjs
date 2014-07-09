@@ -77,9 +77,9 @@
             {{else}}
             <view name="table" as="table" table = "{{_page.view.candidats}}"/>
             {{/}}
-        {{else if @model.participants[_session.userId].role == 1}}
+        {{else if @model.participants[_session.userId].role==true}}
             <view name="table:vote" table = "{{_page.view.candidats}}" vote="{{_page.view.participants[_session.userId].vote}}"/>
-        {{else if @model.participants[_session.userId].role == 0}}
+        {{else if @model.participants[_session.userId].role==false}}
             <view name="table:readonly" table = "{{_page.view.candidats}}"/>
         {{/}}
 

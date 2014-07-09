@@ -196,9 +196,9 @@ module.exports = function (usersPreferences, cb){
     }
 
     var comaprisons = usersPreferences.getPairwiseComparisons();
-
+console.log(comaprisons);
     var result = {
-        'Borda': borda ( usersPreferences ).range('desc'),
+      //  'Borda': borda ( usersPreferences ).range('desc'),
         'mBorda':mBorda ( comaprisons ).range('desc'),
         'Jodson':jodson ( comaprisons ).range(),
         'Simpson':simpson ( comaprisons ).range('desc'),

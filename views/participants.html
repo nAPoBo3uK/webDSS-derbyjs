@@ -21,12 +21,17 @@
                     </button>
                 </td>
                 <td>{{#participant.name}}</td>
-                <td>
+                <td class="text-center">
                     {{if !disabled}}
                     <input type="checkbox" checked="{{#participant.role}}">
 
                     {{else if disabled && #participant.role}}
+
                     <span class="glyphicon glyphicon-ok"/>
+                    <br>
+                    {{if #participant.vote}}
+                    <span class="glyphicon glyphicon-flag"/>
+                    {{/}}
                     {{/}}
 
                 </td>
