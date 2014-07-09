@@ -42,7 +42,7 @@
 
         </div>
         <div class="col-xs-3">
-{{if _session.userId == _page.view.owner}}
+
             {{if $render.ns=='votings' && _page.mode=='view'}}
                 <h4>Участники {{if $render.ns==='votings'}}<a class="btn btn-success" href="/users">
                     <span class="glyphicon glyphicon-plus-sign"/>Добавить
@@ -59,7 +59,7 @@
             </p>
                 <view name="participants" as="plist" list="{{_page.plist}}" data="{{_related.voting[0].participants}}"/>
             {{/}}
-         {{/}}
+
         </div>
 
     </div>

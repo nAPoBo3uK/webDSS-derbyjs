@@ -18,8 +18,29 @@
     </form>
 
 <view:>
-    <h2>{{@model.username}}</h2>
-    <h4>{{@model.specialism}}</h4>
+    <div class="blockquote">
+        <button class="btn btn-default right" on-click="print(@model)">
+            <span class="glyphicon glyphicon-print"/>
+        </button>
+        <h2>{{@model.username}}</h2>
+
+        <h4>Специализация: {{@model.specialism}}</h4>
+    </div>
+    <p>
+    <dl class="dl-horizontal ">
+        <dt>Зарегистрирован:</dt>
+        <dd>02.07.14</dd>
+
+        <dt>e-mail:</dt>
+        <dd>{{@model.email}}</dd>
+        <dt>Skype:</dt>
+        <dd>{{@model.skype}}</dd>
+        <dt>Учавствовал в:</dt>
+        <dd>
+            <a href="#">5</a> голосованиях
+        </dd>
+    </dl>
+    </p>
     <span>{{@model.description}}</span>
 
 

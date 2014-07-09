@@ -25,11 +25,25 @@ app.component('table', require('./presentation/table'));
 app.component('table:vote', require('./presentation/votingTable'));
 app.component('participants', require('./presentation/participants'));
 app.on('model', function(model){
-   /* model.on('all', '**', function (path, event, args) {
+    model.on('all', 'votings.*.participants.*.vote', function (votingId, userId, event, action) {
         console.log('onmodel')
+        if(event === 'change') {
+            if(model.get('_page.progress') == 100){
+                var voters = model.get('votings.'+votingId+'.participants');
+                var votes = [];
+                for (var p in voters) {
+                    votes.push(voters[p].vote);
+                }
+                votingMethods(votes, function(result){
+                    console.log(result);
+                    model.set('votings.'+votingId+'.results', result);
+                });
+                model.set('votings.'+votingId+'.dateFinished', (new Date()).getTime());
+            }
+        }
         console.log(arguments);
 
-    });*/
+    });
     model.fn('all', function(item) {
         return true;
     });
@@ -44,13 +58,8 @@ app.on('model', function(model){
         }
 
     /*    if(counter===all) {
-            var votes = [];
-            for (var p in voters) {
-                votes.push(voters[p].vote);
-            }
-            votingMethods(votes, function(result){
-                model.set('votings.'+voting.id+'.results', result);
-            });
+
+
         }*/
 
         return Math.floor(counter/(all/100));

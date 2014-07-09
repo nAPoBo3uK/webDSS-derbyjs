@@ -65,8 +65,39 @@ module.exports = function (app){
 
 
     }
+    app.proto.viewResults = function(){
+        this.model.set('_page.viewResults', this.model.get('_page.viewResults')?false:true);
+    }
+    app.proto.invertRange = function(range){
+        console.log('@');
+        console.log(range)
+    //TODO: Убрать костыль
+        var newRange =[];
+        for(var p in range)
+            if(p!='length')
+                newRange[p] = range[p];
+        var maxRank = range.length-1;
+        var result =[];
+        var newRank = 0;
+        for(var i=maxRank; i>=0; i--){
+            var indexOfRank = newRange.indexOf(i);
+            console.log(indexOfRank);
+            if(indexOfRank == -1){console.log('indexofranknotfound');
+                return [];
+            } else {
+                result[indexOfRank] = newRank++
+            }
+        }
+        return result;
 
+    }
+    app.proto.resultRange = function(range){
+        var maxRank = range.length-1;
+        var result = [];
+        for(var i =0; i<maxRank; i++)
 
+        return this.model.get('_page.view.candidats.'+(range.indexOf(maxRank)+1));
+    }
     app.proto.formatDate = function(date){
         if(date){
             var d = new Date(date);

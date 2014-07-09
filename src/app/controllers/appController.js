@@ -18,7 +18,7 @@ module.exports = function(app){
         forward: function ( model, params, next ) {
             console.log('forward new');
             model.set('_page.mode', 'new');
-            model.set('_page.new', {});
+            model.set('_page.new', {name:'',description:'', candidats:[['']]});
         }
     })
 

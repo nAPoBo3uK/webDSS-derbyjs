@@ -2,16 +2,16 @@
 <view:>
     <div class="blockquote">
         <h2>{{@model.name}}
-            <button class="btn btn-default" on-click="startVoting(@model)">
+            <button class="btn btn-default right" on-click="print(@model)">
                 <span class="glyphicon glyphicon-print"/>
             </button>
-            {{if !model.dateFinished && _session.userId==@model.owner}}
+            {{if !@model.dateFinished && _session.userId==@model.owner}}
                 {{if @model.dateStarted}}
-                <button class="btn btn-danger" on-click="stopVoting(@model)">
+                <button class="btn btn-danger right" on-click="stopVoting(@model)">
                     <span class="glyphicon glyphicon-stop"/> Остановить
                 </button>
                 {{else if @model.candidats.length>2 && Object.keys(@model.participants).length && @model.owner === _session.userId}}
-                <button class="btn btn-info" on-click="startVoting(@model)">
+                <button class="btn btn-info right" on-click="startVoting(@model)">
                     <span class="glyphicon glyphicon-play"/> Старт!
                 </button>
                 {{/}}
@@ -49,33 +49,69 @@
             <span class="glyphicon glyphicon-pencil"></span>
         </button>
         {{/}}
-        {{if @model.timeFinish}}
-        <button type="button" class="btn btn-default" on-click="viewResults()">
-            <span class="glyphicon glyphicon-pencil"/> Результаты
+        {{if @model.results}}
+        <button type="button" class="btn btn-info right" on-click="viewResults()">
+            <span class="glyphicon glyphicon-list"/> Результаты
         </button>
         {{/}}
     </h4>
     <p>
         {{if @model.owner==_session.userId}}
-        влвделец
-            {{if tableMode=='results'}}
-            <view name="results" table = "{{_page.view.results}}"/>
+            {{if _page.viewResults}}
+            <view name="results" data = "{{_page.view.results}}"/>
             {{else}}
             <view name="table" as="table" table = "{{_page.view.candidats}}"/>
             {{/}}
         {{else if @model.participants[_session.userId].role == 1}}
-       эксперт
-        <view name="table:vote" table = "{{_page.view.candidats}}" vote="{{_page.view.participants[_session.userId].vote}}"/>
+            <view name="table:vote" table = "{{_page.view.candidats}}" vote="{{_page.view.participants[_session.userId].vote}}"/>
         {{else if @model.participants[_session.userId].role == 0}}
-            наблюдатель
             <view name="table:readonly" table = "{{_page.view.candidats}}"/>
         {{/}}
 
     </p>
 
 <results:>
-    Резултатты голосования
+    <p>
+        <small>Ниже указан лучший кандидат по каждой из процедур</small>
+    </p>
 
+    <dl>
+        <ul class="list-unstyled">
+            <li>
+                <p>
+                    <b>Борда: </b>
+                        <view name="range" range="{{invertRange(@data.mBorda)}}"/>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <b>Симпсон: </b>
+                    <view name="range" range="{{@data.Simpson}}"/>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <b>Фишберн: </b>
+                    <view name="range" range="{{invertRange(@data.Fishbern)}}"/>
+                </p>
+            </li>
+            <li>
+                <p>
+                    <b>Джодсон: </b>
+                    <view name="range" range="{{@data.Jodson}}"/>
+                </p>
+            </li>
+
+        </ul>
+
+
+<range:>
+    {{each @range as #c, #i}}
+        {{if #i>0}}
+        <span class="glyphicon glyphicon-chevron-right"/>
+        {{/}}
+        {{_page.view.candidats[#c+1][0]}}
+    {{/}}
 
 <new:>
     <form role="form">
