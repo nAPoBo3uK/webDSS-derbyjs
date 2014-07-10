@@ -34,9 +34,14 @@ module.exports = {
         });
     },
     view: function (model, id) {
-        console.log('votings view')
-        if(model.get('votings.' + id)) {
+        console.log('votings view');
+        var voting;
+        if(voting = model.get('votings.' + id)) {
             model.ref('_page.view', 'votings.' + id);
+            var user = model.at('auths.'+voting.owner).fetch(function(){
+                model.ref('_page.votingOwner', user.at('local'));
+            })
+
             model.start('_page.progress', 'votings.' + id + '.participants', 'progress');
         }
 

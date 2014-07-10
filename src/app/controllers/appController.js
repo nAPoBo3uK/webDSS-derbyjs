@@ -17,11 +17,12 @@ module.exports = function(app){
     })
     app.get({from:'/:ns*', to: '/:ns/new'},{
         forward: function ( model, params, next ) {
-            console.log('forward new');
+            console.log('forward '+params.ns+' new');
             model.set('_page.mode', 'new');
-            model.set('_page.new', {name:'',description:'', candidats:[['']]});
         }
     })
+
+
 
     app.get({from:'/:ns*', to: '/:ns/:id'},{
         forward: function ( model, params, next ) {
@@ -34,28 +35,50 @@ module.exports = function(app){
             }
         }
 
-    })
+    })/*
+function viewVotingById ( model, params, next ) {
 
-  /*  app.get({from:'/votings/:id', to: '/users*'},{
+        service.votings.view(model, params.id);
+        model.set('_page.mode', 'view');
+    }
+    app.get({from:'/votings', to: '/votings/:id'},{
+        forward: viewVotingById
+
+    })
+    app.get({from:'/votings/:id', to: '/votings/:id'},{
         forward: function ( model, params, next ) {
-            console.log('from votings ');
-            var votingId = params.previous.split('/')[2];
-            model.set('_related.voting',votingId);
-            next();
+            console.log('@@'+params.id);
+            service.votings.view(model, params.id);
+            model.set('_page.mode', 'view');
         }
+
     })*/
-    app.get('/:ns*', function(page, model, params, next){
+    app.get('/:ns/new', function(page, model, params, next){
+        console.log('instance page new');
+        if(service[params.ns]){
+            service[params.ns].main(page, model, params, next);
+            model.set('_page.mode', 'new');
+
+        } else next();
+    });
+    app.get('/:ns/:id', function(page, model, params, next){
+        console.log('instance page with id');
+        if(service[params.ns]){
+            service[params.ns].main(page, model, params, next, function(){
+                service[params.ns].view(model, params.id);
+            })
+            model.set('_page.mode', 'view');
+        } else next();
+    });
+    app.get('/:ns', function(page, model, params, next){
+        console.log('instance page');
         if(service[params.ns]){
             service[params.ns].main(page, model, params, next)
         } else next();
     });
 
-  /*  app.get('/:ns/:id', function(page, model, params, next) {
-        if(service[params.ns] && service[params.ns].options) {
-            service[params.ns].main(page, model, params, next);
-        } else next();
-    });
 
-*/
+
+
 }
 

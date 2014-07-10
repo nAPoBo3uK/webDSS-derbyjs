@@ -23,12 +23,12 @@
     <dl class="dl-horizontal ">
         <dt>Менеджер:</dt>
         <dd>
-            {{with getUser(@model.owner)}}
-            <a href="/users/id">{{this.name}}</a>
+
+            <a href="/users/{{@model.owner}}">{{_page.votingOwner.username}}</a>
             {{if @model.owner === _session.userId}}
             (Вы)
             {{/}}
-            {{/}}
+
         </dd>
         <dt>Создано:</dt>
         <dd>{{formatDate(@model.timeCreated)}}</dd>

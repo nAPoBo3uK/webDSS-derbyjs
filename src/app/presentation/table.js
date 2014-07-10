@@ -55,12 +55,11 @@ TableEditable.prototype.setEditMode = function(){
 }
 
 TableEditable.prototype.init = function(){
-    console.log('Table component init');
-    this.model.at('table')
+    console.log('Table componllent init');
     var table = this.model.at('table');
     var matrix = table.get();
     if(!matrix || !matrix.length) {
-        table.push(['']);
+        table.set([['']]);
         this.model.set('editable', true);
     } else this.model.set('editable', false);
 }
