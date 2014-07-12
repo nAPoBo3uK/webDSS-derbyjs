@@ -22,7 +22,6 @@ module.exports = function (app){
         this.model.del('_page.new');
     };
 
-
     app.proto.newItem = function(){
         console.log('@@@')
         var entity = this.model.get('$render.ns');
@@ -40,54 +39,13 @@ module.exports = function (app){
         app.page.redirect('/')
     }
 
-    app.proto.getUser = function(id){
-        var user = this.model.get('auths.'+id +'.local');
-        if(user)
-            return {
-                name: user.username,
-                email: user.email,
-                specialism: user.specialism,
-                description: user.description
-            }
-    }
-
     app.proto.startVoting = function(voting){
         console.log('start voting ' + voting.id);
         this.model.set('votings.' + voting.id +'.timeStarted', (new Date()).getTime());
     }
     app.proto.viewResults = function(){
         this.model.set('_page.viewResults', this.model.get('_page.viewResults')?false:true);
-    }/*
-    app.proto.invertRange = function(range){
-        console.log('@');
-        console.log(range)
-    //TODO: Убрать костыль
-        var newRange =[];
-        for(var p in range)
-            if(p!='length')
-                newRange[p] = range[p];
-        var maxRank = range.length-1;
-        var result =[];
-        var newRank = 0;
-        for(var i=maxRank; i>=0; i--){
-            var indexOfRank = newRange.indexOf(i);
-            console.log(indexOfRank);
-            if(indexOfRank == -1){console.log('indexofranknotfound');
-                return [];
-            } else {
-                result[indexOfRank] = newRank++
-            }
-        }
-        return result;
-
-    }*//*
-    app.proto.resultRange = function(range){
-        var maxRank = range.length-1;
-        var result = [];
-        for(var i =0; i<maxRank; i++)
-
-        return this.model.get('_page.view.candidats.'+(range.indexOf(maxRank)+1));
-    }*/
+    }
     app.proto.formatDate = function(date){
         if(date){
             var d = new Date(date);
