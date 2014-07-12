@@ -57,7 +57,7 @@ module.exports = function (app){
     }
     app.proto.viewResults = function(){
         this.model.set('_page.viewResults', this.model.get('_page.viewResults')?false:true);
-    }
+    }/*
     app.proto.invertRange = function(range){
         console.log('@');
         console.log(range)
@@ -80,14 +80,14 @@ module.exports = function (app){
         }
         return result;
 
-    }
+    }*//*
     app.proto.resultRange = function(range){
         var maxRank = range.length-1;
         var result = [];
         for(var i =0; i<maxRank; i++)
 
         return this.model.get('_page.view.candidats.'+(range.indexOf(maxRank)+1));
-    }
+    }*/
     app.proto.formatDate = function(date){
         if(date){
             var d = new Date(date);
@@ -104,5 +104,11 @@ module.exports = function (app){
             return dd+'.'+mm+'.'+yy;
         }
 
+    }
+    app.proto.stopVoting = function(voting){
+        for(var p in voting.participants){
+            this.model.del('votings.'+voting.id+'.participants.'+p+'.vote');
+        }
+        this.model.del('votings.'+voting.id+'.timeStarted');
     }
 }

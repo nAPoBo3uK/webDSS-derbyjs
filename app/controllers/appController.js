@@ -16,7 +16,7 @@ module.exports = function(app){
     app.get({from:'/users*', to: '/votings*'},{
         forward: function ( model, params, next ) {
             console.log('from users ');
-            model.del('_related.voting');
+            model.del('_related.0');
             next();
         }
     })
@@ -62,34 +62,6 @@ module.exports = function(app){
 
     })
 
-    /*
-function viewVotingById ( model, params, next ) {
-
-        service.votings.view(model, params.id);
-        model.set('_page.mode', 'view');
-    }
-    app.get({from:'/votings', to: '/votings/:id'},{
-        forward: viewVotingById
-
-    })
-    app.get({from:'/votings/:id', to: '/votings/:id'},{
-        forward: function ( model, params, next ) {
-            console.log('@@'+params.id);
-            service.votings.view(model, params.id);
-            model.set('_page.mode', 'view');
-        }
-
-    })*/
-
-   /* app.get('/:ns/:id', function(page, model, params, next){
-        console.log('instance page with id');
-        if(service[params.ns]){
-            service[params.ns].main(page, model, params, next, function(){
-                service[params.ns].view(model, params.id);
-            })
-            model.set('_page.mode', 'view');
-        } else next();
-    });*/
     app.get('/users/:id', function(page, model, params, next){
         console.log('instance page with id');
           service.users.main(page, model, params, next, function(){
