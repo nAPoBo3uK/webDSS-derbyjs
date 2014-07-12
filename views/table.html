@@ -73,7 +73,7 @@
     <editable-cell: element="editable-cell">
         <form on-submit="doneEditing()">
             {{if edit.col===@c && edit.row===@r}}
-            <input id="editcell{{@r}}{{@c}}" class="edit" value="{{edit.text}}" on-keyup="cancelEditing($event)">
+            <input id="editcell{{@r}}{{@c}}" class="edit" value="{{edit.text}}">
             {{else}}
             {{@content}}
             {{/}}
@@ -84,7 +84,7 @@
         <thead>
             <tr>
                 {{each table[0] as #cell, #c}}
-                    <th><span>{{#cell}}</span></th>
+                    <th><span as="cell">{{#cell}}</span></th>
                 {{/}}
             </tr>
         </thead>
@@ -93,7 +93,7 @@
                 {{if #r!=0}}
                     <tr>
                         {{each #row as #cell, #c}}
-                            <td><span>{{#cell}}</span></td>
+                            <td><span as="cell">{{#cell}}</span></td>
                         {{/}}
                     </tr>
                 {{/}}

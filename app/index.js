@@ -1,13 +1,14 @@
 var derby = require('derby');
 var app = module.exports = derby.createApp('auth', __filename);
 var votingMethods = require('./services/votingMethods');
+var path = require('path');
 global.app = app;
 
 app.use(require('d-bootstrap'));
 app.use(require('./infrastructure'));
 
-app.loadViews (__dirname + '/../../views');
-app.loadStyles(__dirname + '/../../styles');
+app.loadViews (path.resolve(__dirname + '/../views'));
+app.loadStyles(path.resolve(__dirname +'/../styles'));
 
 
 app.use(require('./controllers/accessController'));

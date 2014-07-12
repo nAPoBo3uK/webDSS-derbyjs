@@ -14,14 +14,14 @@
                 <h3>Вы действительно хотите удалить свой аккаунт?</h3>
             </view>
         </h1>
-        {{with user.local}}
+        {{with @user.local}}
             <h2>{{this.username}}</h2>
             <p><b>e-mail:</b> {{this.email}}</p>
             <p><b>Skype:</b> {{this.skype}}</p>
             <p><b>Специализация:</b> {{this.specialism}}</p>
             <p><b>О себе:</b> <p>{{this.description}}</p></p>
         {{/}}
-        {{with user.timestamps}}
+        {{with @user.timestamps}}
             <p><b>Зарегистрирован:</b> {{formatDate(this.registered)}}</p>
             <p><b>Заходил:</b> {{formatDate(this.loggedin)}}</p>
         {{/}}

@@ -97,4 +97,9 @@ TableEditable.prototype.cancelEditing = function(e){
 TableEditable.prototype.switchEditMode = function(){
     this.model.set('editable',this.model.get('editable')?false:true);
 }
+TableEditable.prototype.highlight = function(text){
+    console.log('highlight')
+   return text;
+}
+
 module.exports =  TableEditable;
